@@ -1,0 +1,400 @@
+{
+  "scrapedAt": "2025-11-18T22:35:22.173Z",
+  "source": "UFC.com",
+  "dataVersion": "9.0",
+  "fighters": [
+    {
+      "url": "https://www.ufc.com/athlete/arman-tsarukyan",
+      "scrapedAt": "2025-11-18T22:35:09.996Z",
+      "name": "Arman Tsarukyan",
+      "nickname": "Ahalkalakets",
+      "record": "22-3-0 (W-L-D)",
+      "division": "Leicht Division",
+      "ranking": "#1",
+      "pfpRanking": "#14",
+      "status": null,
+      "heroStats": {
+        "winsByKO": 9,
+        "winsBySubmission": null,
+        "firstRoundFinishes": null
+      },
+      "bio": {
+        "status": "Aktiv",
+        "hometown": null,
+        "trainsAt": null,
+        "fightingStyle": null,
+        "age": null,
+        "height": null,
+        "heightInches": null,
+        "weight": null,
+        "weightLbs": null,
+        "octagonDebut": null,
+        "reach": null,
+        "reachInches": null,
+        "legReach": null,
+        "legReachInches": null
+      },
+      "careerStats": {
+        "strikingAccuracy": null,
+        "strikingAccuracyPercent": null,
+        "sigStrikesLanded": null,
+        "sigStrikesAttempted": null,
+        "takedownAccuracy": null,
+        "takedownAccuracyPercent": null,
+        "takedownsLanded": null,
+        "takedownsAttempted": null,
+        "sigStrikesLandedPerMin": null,
+        "sigStrikesAbsorbedPerMin": null,
+        "takedownAvgPer15Min": null,
+        "submissionAvgPer15Min": null,
+        "sigStrikeDefense": null,
+        "takedownDefense": null,
+        "knockdownAvg": null,
+        "avgFightTime": null
+      },
+      "positionStats": {
+        "distance": null,
+        "clinch": "40 (8%)",
+        "ground": null
+      },
+      "strikeTargetStats": {
+        "head": "343",
+        "headPercent": "65%",
+        "body": "121",
+        "bodyPercent": "23%",
+        "leg": "61",
+        "legPercent": "12%"
+      },
+      "winByMethod": {
+        "koTko": "9",
+        "koTkoPercent": "41%",
+        "decision": "8",
+        "decisionPercent": "36%",
+        "submission": "5",
+        "submissionPercent": "23%"
+      }
+    },
+    {
+      "url": "https://www.ufc.com/athlete/dan-hooker",
+      "scrapedAt": "2025-11-18T22:35:13.039Z",
+      "name": "Dan Hooker",
+      "nickname": "The Hangman",
+      "record": "24-12-0 (W-L-D)",
+      "division": "Leicht Division",
+      "ranking": "#6",
+      "pfpRanking": null,
+      "status": null,
+      "heroStats": {
+        "winsByKO": 11,
+        "winsBySubmission": null,
+        "firstRoundFinishes": null
+      },
+      "bio": {
+        "status": "Aktiv",
+        "hometown": null,
+        "trainsAt": null,
+        "fightingStyle": null,
+        "age": null,
+        "height": null,
+        "heightInches": null,
+        "weight": null,
+        "weightLbs": null,
+        "octagonDebut": null,
+        "reach": null,
+        "reachInches": null,
+        "legReach": null,
+        "legReachInches": null
+      },
+      "careerStats": {
+        "strikingAccuracy": null,
+        "strikingAccuracyPercent": null,
+        "sigStrikesLanded": null,
+        "sigStrikesAttempted": null,
+        "takedownAccuracy": null,
+        "takedownAccuracyPercent": null,
+        "takedownsLanded": null,
+        "takedownsAttempted": null,
+        "sigStrikesLandedPerMin": null,
+        "sigStrikesAbsorbedPerMin": null,
+        "takedownAvgPer15Min": null,
+        "submissionAvgPer15Min": null,
+        "sigStrikeDefense": null,
+        "takedownDefense": null,
+        "knockdownAvg": null,
+        "avgFightTime": null
+      },
+      "positionStats": {
+        "distance": null,
+        "clinch": "97 (9%)",
+        "ground": null
+      },
+      "strikeTargetStats": {
+        "head": "707",
+        "headPercent": "63%",
+        "body": "200",
+        "bodyPercent": "18%",
+        "leg": "224",
+        "legPercent": "20%"
+      },
+      "winByMethod": {
+        "koTko": "11",
+        "koTkoPercent": "46%",
+        "decision": "6",
+        "decisionPercent": "25%",
+        "submission": "7",
+        "submissionPercent": "29%"
+      }
+    },
+    {
+      "url": "https://www.ufc.com/athlete/belal-muhammad",
+      "scrapedAt": "2025-11-18T22:35:16.071Z",
+      "name": "Belal Muhammad",
+      "nickname": "Remember The Name",
+      "record": "24-4-0 (W-L-D)",
+      "division": "Weltergewicht Division",
+      "ranking": "#2",
+      "pfpRanking": "#13",
+      "status": null,
+      "heroStats": {
+        "winsByKO": 5,
+        "winsBySubmission": null,
+        "firstRoundFinishes": null
+      },
+      "bio": {
+        "status": "Aktiv",
+        "hometown": null,
+        "trainsAt": null,
+        "fightingStyle": null,
+        "age": null,
+        "height": null,
+        "heightInches": null,
+        "weight": null,
+        "weightLbs": null,
+        "octagonDebut": null,
+        "reach": null,
+        "reachInches": null,
+        "legReach": null,
+        "legReachInches": null
+      },
+      "careerStats": {
+        "strikingAccuracy": null,
+        "strikingAccuracyPercent": null,
+        "sigStrikesLanded": null,
+        "sigStrikesAttempted": null,
+        "takedownAccuracy": null,
+        "takedownAccuracyPercent": null,
+        "takedownsLanded": null,
+        "takedownsAttempted": null,
+        "sigStrikesLandedPerMin": null,
+        "sigStrikesAbsorbedPerMin": null,
+        "takedownAvgPer15Min": null,
+        "submissionAvgPer15Min": null,
+        "sigStrikeDefense": null,
+        "takedownDefense": null,
+        "knockdownAvg": null,
+        "avgFightTime": null
+      },
+      "positionStats": {
+        "distance": null,
+        "clinch": "68 (5%)",
+        "ground": null
+      },
+      "strikeTargetStats": {
+        "head": "1069",
+        "headPercent": "78%",
+        "body": "189",
+        "bodyPercent": "14%",
+        "leg": "115",
+        "legPercent": "8%"
+      },
+      "winByMethod": {
+        "koTko": "5",
+        "koTkoPercent": "21%",
+        "decision": "18",
+        "decisionPercent": "75%",
+        "submission": "1",
+        "submissionPercent": "4%"
+      }
+    },
+    {
+      "url": "https://www.ufc.com/athlete/ian-machado-garry",
+      "scrapedAt": "2025-11-18T22:35:18.373Z",
+      "name": "",
+      "nickname": "",
+      "record": "",
+      "division": "",
+      "ranking": null,
+      "pfpRanking": null,
+      "status": null,
+      "heroStats": {
+        "winsByKO": null,
+        "winsBySubmission": null,
+        "firstRoundFinishes": null
+      },
+      "bio": {
+        "status": null,
+        "hometown": null,
+        "trainsAt": null,
+        "fightingStyle": null,
+        "age": null,
+        "height": null,
+        "heightInches": null,
+        "weight": null,
+        "weightLbs": null,
+        "octagonDebut": null,
+        "reach": null,
+        "reachInches": null,
+        "legReach": null,
+        "legReachInches": null
+      },
+      "careerStats": {
+        "strikingAccuracy": null,
+        "strikingAccuracyPercent": null,
+        "sigStrikesLanded": null,
+        "sigStrikesAttempted": null,
+        "takedownAccuracy": null,
+        "takedownAccuracyPercent": null,
+        "takedownsLanded": null,
+        "takedownsAttempted": null,
+        "sigStrikesLandedPerMin": null,
+        "sigStrikesAbsorbedPerMin": null,
+        "takedownAvgPer15Min": null,
+        "submissionAvgPer15Min": null,
+        "sigStrikeDefense": null,
+        "takedownDefense": null,
+        "knockdownAvg": null,
+        "avgFightTime": null
+      },
+      "positionStats": {
+        "distance": null,
+        "clinch": null,
+        "ground": null
+      },
+      "strikeTargetStats": {
+        "head": null,
+        "headPercent": null,
+        "body": null,
+        "bodyPercent": null,
+        "leg": null,
+        "legPercent": null
+      },
+      "winByMethod": {
+        "koTko": null,
+        "koTkoPercent": null,
+        "decision": null,
+        "decisionPercent": null,
+        "submission": null,
+        "submissionPercent": null
+      }
+    }
+  ],
+  "events": [
+    {
+      "url": "https://www.ufc.com/event/ufc-fight-night-november-22-2025",
+      "scrapedAt": "2025-11-18T22:35:22.158Z",
+      "name": "Tsarukyan vs Hooker",
+      "date": "Sam, Nov. 22 / 7:00 PM CET",
+      "location": "ABHA Arena, Doha Qatar ABHA Arena, Doha Qatar",
+      "fights": [
+        {
+          "fighter1": "Arman Tsarukyan",
+          "fighter2": "Dan Hooker",
+          "weightClass": "Leicht BoutLeicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/arman-tsarukyan",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Belal Muhammad",
+          "fighter2": "Ian Machado Garry",
+          "weightClass": "Weltergewicht BoutWeltergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/belal-muhammad",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Volkan Oezdemir",
+          "fighter2": "Alonzo Menifield",
+          "weightClass": "Halbschwergewicht BoutHalbschwergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/volkan-oezdemir",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Jack Hermansson",
+          "fighter2": "Myktybek Orolbai",
+          "weightClass": "Weltergewicht BoutWeltergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/jack-hermansson",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Serghei Spivac",
+          "fighter2": "Shamil Gaziev",
+          "weightClass": "Schwergewicht BoutSchwergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/sergey-spivak-0",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Alex Perez",
+          "fighter2": "Asu Almabayev",
+          "weightClass": "Fliegengewicht BoutFliegengewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/alex-perez",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Tagir Ulanbekov",
+          "fighter2": "Kyoji Horiguchi",
+          "weightClass": "Fliegengewicht BoutFliegengewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/tagir-ulanbekov",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Bogdan Grad",
+          "fighter2": "Luke Riley",
+          "weightClass": "Federgewicht BoutFedergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/bogdan-grad",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Nicolas Dalby",
+          "fighter2": "Saygid Izagakhmaev",
+          "weightClass": "Weltergewicht BoutWeltergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/nicolas-dalby",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Abdul Rakhman Yakhyaev",
+          "fighter2": "Rafael Cerqueira",
+          "weightClass": "Halbschwergewicht BoutHalbschwergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/abdulrakhman-yakhyaev",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Bekzat Almakhan",
+          "fighter2": "Aleksandre Topuria",
+          "weightClass": "Bantamgewicht BoutBantamgewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/bekzat-almakhan",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Ismail Naurdiev",
+          "fighter2": "Ryan Loder",
+          "weightClass": "Mittelgewicht BoutMittelgewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/ismail-naurdiev",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Nurullo Aliev",
+          "fighter2": "Shem Rock",
+          "weightClass": "Leicht BoutLeicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/nurullo-aliev",
+          "matchupStats": null
+        },
+        {
+          "fighter1": "Marek Bujlo",
+          "fighter2": "Denzel Freeman",
+          "weightClass": "Schwergewicht BoutSchwergewicht Bout",
+          "fightLink": "https://www.ufc.com/athlete/marek-bujlo",
+          "matchupStats": null
+        }
+      ]
+    }
+  ]
+}

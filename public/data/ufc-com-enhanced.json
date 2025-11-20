@@ -1,0 +1,173 @@
+[
+  {
+    "name": "Arman Tsarukyan",
+    "nickname": "Ahalkalakets",
+    "record": "22-3-0 (W-L-D)",
+    "tags": [
+      "#1 Leicht Division",
+      "#14 PFP",
+      "Aktiv"
+    ],
+    "ranking": "#1",
+    "pfpRanking": "#14",
+    "winMethods": {
+      "ko": 9,
+      "sub": 5,
+      "firstRound": 8
+    },
+    "bio": {
+      "hometown": "Georgia",
+      "gym": "Syndicate MMA - Las Vegas, NV",
+      "fightingStyle": "Kickboxer",
+      "age": 29,
+      "height": "67.00",
+      "weight": "155.00",
+      "debut": "Apr. 20, 2019",
+      "legReach": "39.50"
+    },
+    "stats": {
+      "sigStrikesLanded": 525,
+      "sigStrikesAttempted": 81,
+      "strikingAccuracy": "49%",
+      "takedownsLanded": 3,
+      "takedownsAttempted": 81,
+      "takedownAccuracy": "37%",
+      "tdAvg": "3.25",
+      "subAvg": "0.00",
+      "strDef": null,
+      "tdDef": null,
+      "knockdownAvg": "0.32",
+      "avgFightTime": "12:36"
+    },
+    "positionStats": {
+      "distance": "331 (63%)",
+      "clinch": "40 (8%)",
+      "ground": "154 (29%)"
+    },
+    "winByMethod": {
+      "ko": "9 (41%)",
+      "dec": "8 (36%)",
+      "sub": "5 (23%)"
+    }
+  },
+  {
+    "name": "Dan Hooker",
+    "nickname": "The Hangman",
+    "record": "24-12-0 (W-L-D)",
+    "tags": [
+      "#6 Leicht Division",
+      "Aktiv"
+    ],
+    "ranking": "#6",
+    "pfpRanking": null,
+    "winMethods": {
+      "ko": 11,
+      "sub": 7,
+      "firstRound": 12
+    },
+    "bio": {
+      "hometown": "Aukland, New Zealand",
+      "gym": "Saigon Sports Club- Vietnam",
+      "fightingStyle": "MMA",
+      "age": 35,
+      "height": "72.00",
+      "weight": "155.50",
+      "debut": "Jun. 28, 2014",
+      "legReach": "42.50"
+    },
+    "stats": {
+      "sigStrikesLanded": 1131,
+      "sigStrikesAttempted": 32,
+      "strikingAccuracy": "49%",
+      "takedownsLanded": 3,
+      "takedownsAttempted": 32,
+      "takedownAccuracy": "34%",
+      "tdAvg": "0.73",
+      "subAvg": "0.33",
+      "strDef": null,
+      "tdDef": null,
+      "knockdownAvg": "0.60",
+      "avgFightTime": "10:13"
+    },
+    "positionStats": {
+      "distance": "951 (84%)",
+      "clinch": "97 (9%)",
+      "ground": "83 (7%)"
+    },
+    "winByMethod": {
+      "ko": "11 (46%)",
+      "dec": "6 (25%)",
+      "sub": "7 (29%)"
+    }
+  },
+  {
+    "name": "Belal Muhammad",
+    "nickname": "Remember The Name",
+    "record": "24-4-0 (W-L-D)",
+    "tags": [
+      "#2 Weltergewicht Division",
+      "#13 PFP",
+      "Aktiv"
+    ],
+    "ranking": "#2",
+    "pfpRanking": "#13",
+    "winMethods": {
+      "ko": 5,
+      "sub": 1,
+      "firstRound": 0
+    },
+    "bio": {
+      "hometown": "Chicago, United States",
+      "gym": "Valle Flow Striking Gym",
+      "age": 36,
+      "height": "71.00",
+      "weight": "169.00",
+      "debut": "Jul. 7, 2016",
+      "legReach": "40.00"
+    },
+    "stats": {
+      "sigStrikesLanded": 1373,
+      "sigStrikesAttempted": 119,
+      "strikingAccuracy": "43%",
+      "takedownsLanded": 15,
+      "takedownsAttempted": 119,
+      "takedownAccuracy": "39%",
+      "tdAvg": "2.24",
+      "subAvg": "0.15",
+      "strDef": null,
+      "tdDef": null,
+      "knockdownAvg": "0.00",
+      "avgFightTime": "15:23"
+    },
+    "positionStats": {
+      "distance": "1186 (86%)",
+      "clinch": "68 (5%)",
+      "ground": "119 (9%)"
+    },
+    "winByMethod": {
+      "ko": "5 (21%)",
+      "dec": "18 (75%)",
+      "sub": "1 (4%)"
+    }
+  },
+  {
+    "name": "",
+    "nickname": "",
+    "record": "",
+    "tags": [],
+    "ranking": null,
+    "pfpRanking": null,
+    "winMethods": {
+      "ko": 0,
+      "sub": 0,
+      "firstRound": 0
+    },
+    "bio": {},
+    "stats": {
+      "strikingAccuracy": null,
+      "takedownAccuracy": null
+    },
+    "positionStats": {},
+    "winByMethod": {}
+  }
+]
