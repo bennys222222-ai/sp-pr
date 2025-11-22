@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UFC Qatar (22.11.25) - Fight Card, Results, Start time and where to watch</title>
+  <meta name="keywords" content="Upcoming MMA events" />
+  <meta name="description" content="All fighters UFC Qatar 22.11.25 and Results. Who performs in the main card and prelims today. Time of the beginning of the broadcast, fighters stats, news and predictions for the Bout." />
+  <meta name="author" content="GIDStats">
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="theme-color" content="#fff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="canonical" href="https://gidstats.com/events/ufc_fight_night-2560/">
+      <meta property="og:locale" content="en" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="UFC Qatar (22.11.25) - Fight Card, Results, Start time and where to watch" />
+  <meta property="og:description" content="All fighters UFC Qatar 22.11.25 and Results. Who performs in the main card and prelims today. Time of the beginning of the broadcast, fighters stats, news and predictions for the Bout." />
+  <meta property="og:url" content="https://gidstats.com/events/ufc_fight_night-2560/" />
+  <meta property="og:site_name" content="GIDStats" />
+  <meta property="og:image" content="https://gidstats.com/images/gidstats-default-cover-en.png" />
+  <meta property="og:image:secure_url" content="https://gidstats.com/images/gidstats-default-cover-en.png" />
+    <meta property="og:image:width" content="1000" />
+  <meta property="og:image:height" content="600" />
+      <link rel="alternate" hreflang="en" href="https://gidstats.com/events/ufc_fight_night-2560/" />
+    <link rel="alternate" hreflang="ru" href="https://gidstats.com/ru/events/ufc_fight_night-2560/" />
+  
+  <link href="/rss/" type="application/rss+xml" title="rss" rel="alternate" />
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/images/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#1db248">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#1db248">
+  <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#1db248">
+  <link rel="stylesheet" href="/css/main-min.css?v=1.6.77">
+    </head>
+<body>
+    <div class="overlay"></div>
+  <header class="header">
+    <div class="container">
+      <button class="burger-btn" type="button" aria-label="Menu"></button>
+            <a class="logo" href="/">
+        <img src="/images/gidstats-logo-en-new-green.png" alt="Gidstats"></a>
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://gidstats.com",
+          "logo": "https://gidstats.com/images/gidstats-logo-en-new-green.png"
+        }
+      </script>
+            <a class="header__bar" href="/" title="Home">
+
+      </a>
+      <nav class="nav">
+  <a class="nav__link on" href="/events/" title="Events">Events</a>  <a class="nav__link" href="/ranking/" title="ММА Rankings">ММА Rankings</a>  <a class="nav__link" href="/bk-top/" title="Bookmakers">Bookmakers</a>  <a class="nav__link" href="/donat/" title="Donate">Donate</a>  <a class="nav__link" href="/contact/" title="Contact">Contact</a>
+
+<div class="lang-top">
+	<div class="lang-top-title">Language:</div>
+	<div class="lang-top-box">
+						<a href="/en/" class="on">Eng</a>
+						<a href="/ru/">Рус</a>
+		
+	</div>
+</div>
+
+</nav>      <button class="loupe-button" type="button" aria-label="Search"></button>
+      <div class="search-form" method="get" action="/fighters/">
+                <script async src="https://cse.google.com/cse.js?cx=73011dc06d8cf4654"></script>
+                <div class="gcse-searchbox-only"></div>
+        <div class="gcse-searchresults-only"></div>
+      </div>
+
+    </div>
+  </header>
+    <main class="tournament__main"><section class="tournament-top">
+  <div class="container">
+    <h1 class="tournament-top__title  visually-hidden">UFC Qatar</h1>
+    <div class="img-wrapper  img-wrapper--first-fighter">
+      <img src="/img/fighters/0/0/1-652.png" alt="Arman Tsarukyan">
+    </div>
+    <p class="name">
+      Arman
+      <br>
+      <span>Tsarukyan</span>
+    </p>
+    <div class="center-block">
+      <img loading="lazy" src="/images/events-vs.png" alt="VS" width="146px" height="287px">
+    </div>
+    <p class="name">
+      Dan
+      <br>
+      <span>Hooker</span>
+    </p>
+    <div class="img-wrapper  img-wrapper--second-fighter">
+      <img src="/img/fighters/0/0/2-643.png" alt="Dan Hooker">
+    </div>
+    <div class="tournament-date">
+      <div class="place fa__event">UFC Qatar</div>
+      <div class="date fa__event" content="2025-11-22T10:00">
+        <img src="/files/images/fa-fa-calendar.png" alt="">22.11.25
+      </div>
+      <div class="time fa__event">
+        <img src="/files/images/fa-fa-clock-o.png" alt="">10:00 AM ET
+      </div>
+            <div class="address fa__event">
+        <img src="/files/images/fa-fa-map-marker.png" alt="">Doha, Qatar.
+      </div>
+          </div>
+  </div>
+</section>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "UFC Qatar",
+    "description": "Main Card and Prelims, start time, sequence of bouts, predictions for fights and statistics of fighters",
+    "image": "https://gidstats.com/images/gidstats-default-events-cover.jpg",
+    "startDate": "2025-11-22T10:00-05:00",
+    "endDate": "2025-11-22T15:00-05:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+    "location": {
+      "@type": "VirtualLocation",
+      "url": "https://gidstats.com/"
+    },
+    "performer": {
+      "@type": "Person",
+      "name": "GIDStats"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://gidstats.com/",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "-05:00"
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "GIDStats.com",
+      "url": "https://gidstats.com/"
+    }
+  }
+</script>
+
+<div class="container container--aside container--aside-events">
+  <section class="events">
+    <h2 class="events__title visually-hidden">UFC Qatar</h2>
+                <div class="tabs">
+            <input class="tabs__input" type="radio" name="tab" id="tab1"  checked>
+      <label class="tabs__label" for="tab1">Main Card</label>
+            <input class="tabs__input" type="radio" name="tab" id="tab2" >
+      <label class="tabs__label" for="tab2">Prelims</label>
+      
+            <ul class="other-fights-list" id="content1">
+                <li class="other-fights-list__item">
+          <a href="/fighters/arman_tsarukyan.html" class="other-fights-list__fighter fighter--default" title="Arman Tsarukyan">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-673.png" alt="Arman Tsarukyan">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Arman Tsarukyan</div>
+                <div class="record">
+                  <span>22</span>
+                  -
+                  <span>3</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/arminia.png" alt="Armenia">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/arman_tsarukyan_vs_dan_hooker.html" title="Tsarukyan - Hooker Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              3:30 PM ET              <span>
+                <font>•</font>
+                5 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Lightweight Bout<span>155 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/dan_hooker.html" class="other-fights-list__fighter fighter--default" title="Dan Hooker">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Dan Hooker</div>
+          <div class="record">
+            <span>24</span>
+            -
+            <span>12</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-708.png" alt="Dan Hooker">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-nz.png" alt="New Zealand">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/belal_muhammad.html" class="other-fights-list__fighter fighter--default" title="Belal Muhammad">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-3.png" alt="Belal Muhammad">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Belal Muhammad</div>
+                <div class="record">
+                  <span>24</span>
+                  -
+                  <span>4</span>
+                  - 0, 1 NC                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/Palestine.png" alt="Palestine">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/belal_muhammad_vs_ian_machado_garry.html" title="Muhammad - Machado Garry Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              3:00 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Welterweight Bout<span>170 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/ian_garry.html" class="other-fights-list__fighter fighter--default" title="Ian Machado Garry">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Ian Machado Garry</div>
+          <div class="record">
+            <span>16</span>
+            -
+            <span>1</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-895.png" alt="Ian Machado Garry">
+                <img class="other-fights-list__flag" src="/img/country/30/0/Ireland.png" alt="Ireland">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/volkan_oezdemir.html" class="other-fights-list__fighter fighter--default" title="Volkan Oezdemir">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-566.png" alt="Volkan Oezdemir">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Volkan Oezdemir</div>
+                <div class="record">
+                  <span>20</span>
+                  -
+                  <span>8</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/ch.png" alt="Switzerland">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/volkan_oezdemir_vs_alonzo_menifield.html" title="Oezdemir - Menifield Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              2:30 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Light Heavyweight Bout<span>205 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/alonzo_menifield.html" class="other-fights-list__fighter fighter--default" title="Alonzo Menifield">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Alonzo Menifield</div>
+          <div class="record">
+            <span>17</span>
+            -
+            <span>5</span>
+            - 1          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-486.png" alt="Alonzo Menifield">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-US.png" alt="USA">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/jack_hermansson.html" class="other-fights-list__fighter fighter--default" title="Jack Hermansson">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-100.png" alt="Jack Hermansson">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Jack Hermansson</div>
+                <div class="record">
+                  <span>24</span>
+                  -
+                  <span>9</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/Norway.png" alt="Norway">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/jack_hermansson_vs_myktybek_orolbai.html" title="Hermansson - Orolbay Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              2:00 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Welterweight Bout<span>170 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/myktybek_orolbay_uulu.html" class="other-fights-list__fighter fighter--default" title="Myktybek Orolbay">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Myktybek Orolbay</div>
+          <div class="record">
+            <span>14</span>
+            -
+            <span>2</span>
+            - 1          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-2442.png" alt="Myktybek Orolbay">
+                <img class="other-fights-list__flag" src="/img/country/30/0/kg.png" alt="Kyrgyzstan">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/serghei_spivac.html" class="other-fights-list__fighter fighter--default" title="Serghei Spivac">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-293.png" alt="Serghei Spivac">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Serghei Spivac</div>
+                <div class="record">
+                  <span>17</span>
+                  -
+                  <span>6</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/Moldova.png" alt="Moldova">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/serghei_spivac_vs_shamil_gaziev.html" title="Spivac - Gaziev Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              1:30 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Heavyweight Bout<span>265 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/shamil_gaziev.html" class="other-fights-list__fighter fighter--default" title="Shamil Gaziev">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Shamil Gaziev</div>
+          <div class="record">
+            <span>14</span>
+            -
+            <span>1</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-2507.png" alt="Shamil Gaziev">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-Bahrain.png" alt="Bahrain">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/alex_perez.html" class="other-fights-list__fighter fighter--default" title="Alex Perez">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-482.png" alt="Alex Perez">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Alex Perez</div>
+                <div class="record">
+                  <span>25</span>
+                  -
+                  <span>9</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/flag-US.png" alt="USA">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/alex_perez_vs_asu_almabayev.html" title="Perez - Almabaev Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              1:00 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Flyweight Bout<span>125 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/asu_almabaev.html" class="other-fights-list__fighter fighter--default" title="Asu Almabaev">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Asu Almabaev</div>
+          <div class="record">
+            <span>22</span>
+            -
+            <span>3</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-1530.png" alt="Asu Almabaev">
+                <img class="other-fights-list__flag" src="/img/country/30/0/kz.png" alt="Kazakhstan">      </div>
+    </a>
+    </li>
+    
+    </ul>
+          <ul class="other-fights-list" id="content2">
+                <li class="other-fights-list__item">
+          <a href="/fighters/luke_riley.html" class="other-fights-list__fighter fighter--default" title="Luke Riley">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-1898.png" alt="Luke Riley">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Luke Riley</div>
+                <div class="record">
+                  <span>11</span>
+                  -
+                  <span>0</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/flag-England.png" alt="England">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/luke_riley_vs_bogdan_grad.html" title="Riley - Grad Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              12:20 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Featherweight Bout<span>145 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/bogdan_grad.html" class="other-fights-list__fighter fighter--default" title="Bogdan Grad">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Bogdan Grad</div>
+          <div class="record">
+            <span>15</span>
+            -
+            <span>3</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-3160.png" alt="Bogdan Grad">
+                <img class="other-fights-list__flag" src="/img/country/30/0/Austria.png" alt="Austria">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/abdulrakhman_yakhyaev.html" class="other-fights-list__fighter fighter--default" title="Abdulrakhman Yakhyaev">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img fighter-alt" loading="lazy" src="/images/nophoto-1-m.png" alt="Abdulrakhman Yakhyaev">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Abdulrakhman Yakhyaev</div>
+                <div class="record">
+                  <span>7</span>
+                  -
+                  <span>0</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/Turkey-1.png" alt="Turkey">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/abdulrakhman_yakhyaev_vs_raffael_cerqueira.html" title="Yakhyaev - Cerqueira Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              12:00 PM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Light Heavyweight Bout<span>205 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/raffael_cerqueira.html" class="other-fights-list__fighter fighter--default" title="Raffael Cerqueira">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Raffael Cerqueira</div>
+          <div class="record">
+            <span>11</span>
+            -
+            <span>3</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-3128.png" alt="Raffael Cerqueira">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-Brazil.png" alt="Brazil">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/kyoji_horiguchi.html" class="other-fights-list__fighter fighter--default" title="Kyoji Horiguchi">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img fighter-alt" loading="lazy" src="/img/fighters/240/160/3-929.png" alt="Kyoji Horiguchi">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Kyoji Horiguchi</div>
+                <div class="record">
+                  <span>34</span>
+                  -
+                  <span>5</span>
+                  - 0, 1 NC                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/jp.png" alt="Japan">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/kyoji_horiguchi_vs_tagir_ulanbekov.html" title="Horiguchi - Ulanbekov Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              11:40 AM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Flyweight Bout<span>125 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/tagir_ulanbekov.html" class="other-fights-list__fighter fighter--default" title="Tagir Ulanbekov">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Tagir Ulanbekov</div>
+          <div class="record">
+            <span>17</span>
+            -
+            <span>2</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-131.png" alt="Tagir Ulanbekov">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-russia.png" alt="Russia">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/bekzat_almakhan.html" class="other-fights-list__fighter fighter--default" title="Bekzat Almakhan">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-2686.png" alt="Bekzat Almakhan">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Bekzat Almakhan</div>
+                <div class="record">
+                  <span>12</span>
+                  -
+                  <span>2</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/kz.png" alt="Kazakhstan">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/bekzat_almakhan_vs_aleksandre_topuria.html" title="Almakhan - Topuria Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              11:20 AM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Bantamweight Bout<span>135 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/aleksandre_topuria.html" class="other-fights-list__fighter fighter--default" title="Aleksandre Topuria">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Aleksandre Topuria</div>
+          <div class="record">
+            <span>6</span>
+            -
+            <span>1</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-3166.png" alt="Aleksandre Topuria">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-Georgia.png" alt="Georgia">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/ryan_loder.html" class="other-fights-list__fighter fighter--default" title="Ryan Loder">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-3070.png" alt="Ryan Loder">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Ryan Loder</div>
+                <div class="record">
+                  <span>7</span>
+                  -
+                  <span>2</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/flag-US.png" alt="USA">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/ryan_loder_vs_ismail_naurdiev.html" title="Loder - Naurdiev Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              11:00 AM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Middleweight Bout<span>185 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/ismail_naurdiev.html" class="other-fights-list__fighter fighter--default" title="Ismail Naurdiev">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Ismail Naurdiev</div>
+          <div class="record">
+            <span>24</span>
+            -
+            <span>8</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-3127.png" alt="Ismail Naurdiev">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-Morocco.png" alt="Morocco">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/nurullo_aliev.html" class="other-fights-list__fighter fighter--default" title="Nurullo Aliev">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-1997.png" alt="Nurullo Aliev">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Nurullo Aliev</div>
+                <div class="record">
+                  <span>10</span>
+                  -
+                  <span>0</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/Tajikistan.png" alt="Tajikistan">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/nurullo_aliev_vs_shaqueme_rock.html" title="Aliev - Rock Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              10:40 AM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Lightweight Bout<span>155 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/shem_rock.html" class="other-fights-list__fighter fighter--default" title="Shem Rock">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Shem Rock</div>
+          <div class="record">
+            <span>12</span>
+            -
+            <span>1</span>
+            - 1          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-2802.png" alt="Shem Rock">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-UK.png" alt="United Kingdom">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/saygid_izagakhmaev.html" class="other-fights-list__fighter fighter--default" title="Saygid Izagakhmaev">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img fighter-alt" loading="lazy" src="/images/nophoto-1-m.png" alt="Saygid Izagakhmaev">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Saygid Izagakhmaev</div>
+                <div class="record">
+                  <span>22</span>
+                  -
+                  <span>2</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/flag-russia.png" alt="Russia">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/saygid_izagakhmaev_vs_nicolas_dalby.html" title="Izagakhmaev - Dalby Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              10:20 AM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Welterweight Bout<span>170 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/nicolas_dalby.html" class="other-fights-list__fighter fighter--default" title="Nicolas Dalby">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Nicolas Dalby</div>
+          <div class="record">
+            <span>23</span>
+            -
+            <span>6</span>
+            - 1, 2 NC          </div>
+        </div>
+        <img class="fighter-img" loading="lazy" src="/img/fighters/240/160/3-372.png" alt="Nicolas Dalby">
+                <img class="other-fights-list__flag" src="/img/country/30/0/Denmark.png" alt="Denmark">      </div>
+    </a>
+    </li>
+            <li class="other-fights-list__item">
+          <a href="/fighters/marek_bujo.html" class="other-fights-list__fighter fighter--default" title="Marek Bujło">
+            <div class="img-wrapper other-fights-list__box">
+              <img class="fighter-img fighter-alt" loading="lazy" src="/images/nophoto-1-m.png" alt="Marek Bujło">
+              <div class="fighter__box">
+                <div class="fighter__word">
+                                  </div>
+                <div class="name">Marek Bujło</div>
+                <div class="record">
+                  <span>6</span>
+                  -
+                  <span>0</span>
+                  - 0                </div>
+              </div>
+                            <img class="other-fights-list__flag" src="/img/country/30/0/flag-Poland.png" alt="Poland">
+                            <img class="event-vs-hidden" loading="lazy" src="/files/images/events-vs.png" alt="VS">
+            </div>
+          </a>
+          <a class="other-fights-list__link" href="/events/ufc_fight_night-2560/marek_bujo_vs_denzel_freeman.html" title="Bujło - Freeman Predictions">
+            <div class="center-block">
+                          <div class="center-block__clock">
+              10:00 AM ET              <span>
+                <font>•</font>
+                3 x 5
+              </span>
+                          </div>
+            <div class="img-wrapper">
+              <img class="event-vs" loading="lazy" src="/images/events-vs.png" alt="VS">
+            </div>
+            <div class="weight">
+              Heavyweight Bout<span>265 lbs</span>            </div>
+                </div>
+    </a>
+    <a href="/fighters/denzel_freeman.html" class="other-fights-list__fighter fighter--default" title="Denzel Freeman">
+      <div class="img-wrapper other-fights-list__box other-fights-list__box--2">
+        <div class="fighter__box">
+          <div class="fighter__word">
+                      </div>
+          <div class="name">Denzel Freeman</div>
+          <div class="record">
+            <span>6</span>
+            -
+            <span>1</span>
+            - 0          </div>
+        </div>
+        <img class="fighter-img fighter-alt" loading="lazy" src="/images/nophoto-1-m.png" alt="Denzel Freeman">
+                <img class="other-fights-list__flag" src="/img/country/30/0/flag-US.png" alt="USA">      </div>
+    </a>
+    </li>
+    
+    </ul>
+    
+</div>
+
+
+<div class="events__rek--bottom"></div>
+
+<!--  -->
+
+<div class="events__text events__text-after"><p><div class="promotion-info">
+	<h2 class="promotion-title">
+		About UFC
+	</h2>
+	<div class="home__nav promotion-link">
+		<a class="promotion-logo promotion-logo--ufc"><img src="/files/images/ufc-logo.png" alt="Logo UFC"></a>
+		<a target="_blank" rel="nofollow" href="https://www.ufc.com/"><img src="/images/fa-website-gr.png" title="Website"><div>Website</div></a>
+		<a target="_blank" href="/ranking/ufc/"><img src="/images/fa-rank1-gr.png" title="Rankings"><div>Rankings</div></a>
+		<a target="_blank" href="/events/?promotion=UFC"><img src="/images/fa-clock-gr.png" title="Events"><div>Events</div></a>
+		<a target="_blank" rel="nofollow" href="https://ufcfightpass.com/"><img src="/images/fa-eye-gr.png" title="Watch"><div>Watch</div></a>
+		<a target="_blank" rel="nofollow" href="https://www.youtube.com/c/ufc/"><img src="/images/fa-youtube-gr.png" title="YouTube"><div>YouTube</div></a>
+		<a target="_blank" rel="nofollow" href="https://en.wikipedia.org/wiki/Ultimate_Fighting_Championship"><img src="/images/fa-wiki-gr.png" title="WikiPedia"><div>Wikipedia</div></a>
+<a target="_blank" rel="nofollow" href="https://twitter.com/ufc"><img src="/images/fa-twitter-gr.png" title="Twitter"><div>Twitter</div></a>
+	</div>
+</div></p></div>
+<div></div>
+<div class="events__canceled_fights">
+  <h3>Cancelled Bouts UFC Qatar</h3>
+  <ul>
+        <li>
+      <a href="/canceled/ufc_fight_night-2560~felipe_lima_vs_daniel_marcos.html">
+        Felipe Lima
+        <span>vs</span>
+        Daniel Marcos
+      </a>
+    </li>
+        <li>
+      <a href="/canceled/ufc_fight_night-2560~muhammad_naimov_vs_mairon_santos.html">
+        Muhammadjon Naimov
+        <span>vs</span>
+        Mairon Santos
+      </a>
+    </li>
+        <li>
+      <a href="/canceled/ufc_fight_night-2560~marek_bujo_vs_jos_luiz.html">
+        Marek Bujło
+        <span>vs</span>
+        José Luiz
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+<section class="socials">
+  <div><h2 class="socials__title">Share</h2>
+
+<ul class="socials-list">
+	<li class="socials-list__item"><a class="socials-list__link  socials-list__link--fb" href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https%3A%2F%2Fgidstats.com%2Fevents%2Fufc_fight_night-2560%2F&display=popup&ref=plugin&src=share_button" target="_blank" rel="nofollow noreferrer">Facebook</a></li>
+<li class="socials-list__item"><a class="socials-list__link  socials-list__link--tw" href="http://twitter.com/share?url=https%3A%2F%2Fgidstats.com%2Fevents%2Fufc_fight_night-2560%2F" target="_blank" rel="nofollow noreferrer">Twitter</a></li>
+<li class="socials-list__item"><a class="socials-list__link  socials-list__link--tg" href="https://t.me/share/url?url=https%3A%2F%2Fgidstats.com%2Fevents%2Fufc_fight_night-2560%2F" target="_blank" rel="nofollow noreferrer">Telegram</a></li>
+</ul>
+</div>
+</section>
+</section>
+<aside class="aside">
+			<div class="events">
+	<h3 class="events__title">Next MMA Event</h3>
+	<div class="events-block">
+		<span class="address"><span class="bold">ACA Young Eagles 60</span><span class="text">Grozny, Chechnya, Russia.</span></span>
+		<p class="date">20.11.25</p>
+		<ul class="events-list">
+						<li class="events-list__item">
+				<a class="events-list__link" href="/events/aca_young_eagles_60-2591/islam_geroev_vs_eldar_munapov.html">
+					<p class="fighter">Islam Geroev </p>
+					<div class="img-wrapper">
+						<img src="/images/events-vs.png" alt="VS">
+					</div>
+					<p class="fighter">Eldar Munapov </p>
+				</a>
+			</li>
+						<li class="events-list__item">
+				<a class="events-list__link" href="/events/aca_young_eagles_60-2591/abdurakhman_yusupov_vs_magomed_chadaev.html">
+					<p class="fighter">Abdurakhman Yusupov </p>
+					<div class="img-wrapper">
+						<img src="/images/events-vs.png" alt="VS">
+					</div>
+					<p class="fighter">Magomed Chadaev </p>
+				</a>
+			</li>
+						<li class="events-list__item">
+				<a class="events-list__link" href="/events/aca_young_eagles_60-2591/khavid_dakaev_vs_eldar_nurmamedov.html">
+					<p class="fighter">Khavid Dakaev </p>
+					<div class="img-wrapper">
+						<img src="/images/events-vs.png" alt="VS">
+					</div>
+					<p class="fighter">Eldar Nurmamedov </p>
+				</a>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="events__footer">
+		<a class="events__footer-link" href="/events/aca_young_eagles_60-2591/">More &raquo;</a>
+	</div>
+</div>
+<div class="events-pairs">
+	<h3 class="events-pairs__title">Upcoming Events</h3>
+	<ul class="events-list">
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/cage_warriors_197-2585/">
+				<p class="date" content="2025-11-21T12:00">21.11.25</p>
+				<p class="pair">Cage Warriors 197</p>
+				<p class="address"><span class="text">Manchester, England.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/lfa_223-2586/">
+				<p class="date" content="2025-11-21T21:00">21.11.25</p>
+				<p class="pair">LFA 223</p>
+				<p class="address"><span class="text">Niagara Falls, New York, USA.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/open_fighting_championship_59-2603/">
+				<p class="date" content="2025-11-22T09:00">22.11.25</p>
+				<p class="pair">Open FC 59</p>
+				<p class="address"><span class="text">Irkutsk, Russia</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/ufc_fight_night-2560/">
+				<p class="date" content="2025-11-22T10:00">22.11.25</p>
+				<p class="pair">UFC Qatar</p>
+				<p class="address"><span class="text">Doha, Qatar.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/oktagon_80-2580/">
+				<p class="date" content="2025-11-22T12:00">22.11.25</p>
+				<p class="pair">OKTAGON 80</p>
+				<p class="address"><span class="text">Munich, Germany.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/cage_warriors_198-2584/">
+				<p class="date" content="2025-11-22T12:00">22.11.25</p>
+				<p class="pair">Cage Warriors 198</p>
+				<p class="address"><span class="text">Manchester, England.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/aca_196-2571/">
+				<p class="date" content="2025-11-23T10:00">23.11.25</p>
+				<p class="pair">ACA 196</p>
+				<p class="address"><span class="text">Minsk, Belarus</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/brave_cf_102-2599/">
+				<p class="date" content="2025-11-23T13:00">23.11.25</p>
+				<p class="pair">BRAVE CF 102</p>
+				<p class="address"><span class="text">Ljubljana, Slovenia</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/aca-197/">
+				<p class="date" content="2025-12-05T09:00">05.12.25</p>
+				<p class="pair">ACA 197</p>
+				<p class="address"><span class="text">Moscow, Russia</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/pfl_mena_4-2579/">
+				<p class="date" content="2025-12-05T10:30">05.12.25</p>
+				<p class="pair">PFL MENA 4</p>
+				<p class="address"><span class="text">Al Khobar, Saudi Arabia.</span></p>
+							</a>
+		</li>
+		
+	</ul>
+</div>
+	<!--  -->
+</aside>
+
+</div>
+</main>
+    <footer class="footer">
+    <div class="container">
+      <div class="logo-block">
+                <a class="logo-link" href="/">
+          <img src="/images/gidstats-logo-en-new-green.png" alt="Gidstats"></a>
+              </div>
+            <div class="copyright-block"><p class="copyright-block__text">Copyright &copy; 2019-2025 UFC</p>
+
+<p class="copyright-block__text">All rights reserved</p>
+</div>
+                  <div class="text-block">
+        <p class="text-block__text">All content on the site is for informational purposes only. We are not responsible for your actions.
+The site uses cookies for analytics purposes. If you do not agree with this, then leave the site.</p>
+      </div>
+                  <div class="about-block"><h3 class="about-block__title">Useful</h3>
+<a class="about-block__link" href="/events/">Events</a> <a class="about-block__link" href="https://gidstats.com/#result__events">Results</a> <a class="about-block__link" href="/ranking/">Rankings ММА</a> <a class="about-block__link" href="/canceled/">Canceled fights</a></div>
+                  <div class="jur-block"><h3 class="jur-block__title">Our Website</h3>
+<a class="jur-block__link" href="/privacy-policy/">Privacy Policy</a>
+<a class="jur-block__link" href="/donat/">Donate</a>
+<a class="jur-block__link" href="/about/">About Us</a>
+<a class="jur-block__link" href="/contact/">Contact</a></div>
+          </div>
+  </footer>
+    <!-- Фиксированный подвал -->
+  <div id="posterFixed" class="poster__fixed">
+      <a class="poster__fixed__link" href="https://gidfamily.ru/link/track/gidstats_sticky/source/campaign-ads" target="_blank" rel="nofollow">
+      <img class="poster__fixed__fighter poster__fixed__fighter--1" src="https://gidstats.com/img/fighters/0/0/1-652.png" alt="">
+        <div class="poster__fixed__text">
+          <div class="poster__fixed__event">
+          <div>UFC</div> Qatar
+          </div>
+          <div class="poster__fixed__freebet">
+          Bonus <span>Get</span>
+          </div>
+        </div>
+        <img class="poster__fixed__fighter poster__fixed__fighter--2" src="https://gidstats.com/img/fighters/0/0/2-643.png" alt="">
+      </a>
+      <span class="poster__fixed__closebtn" onclick="closeForm()">X</span>
+      <div class="poster__fixed__bgline"></div>
+      <div class="poster__fixed__bottomline"></div>
+    </div>
+    <script>
+    var arr_words = {
+      "all_rating": "All Rating",
+      "collapse": "Hide",
+      "show_all_stats": "Show<br class="br-768"> Stats",
+      "hide_all_stats": "Hide<br class="br-768"> stats",
+    };
+  </script>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/slick.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-main.js"></script>
+        <script type="text/javascript" src="/js/main.js?v=1.6.39"></script>
+  
+    <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KHN9RFRV');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHN9RFRV"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+</body>
+
+</html>

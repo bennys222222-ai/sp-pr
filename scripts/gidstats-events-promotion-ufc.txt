@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcoming MMA events shedule - date, time and location</title>
+  <meta name="keywords" content="Upcoming MMA events" />
+  <meta name="description" content="Upcoming MMA events shedule: UFC, Bellator, LFA and others championchip" />
+  <meta name="author" content="GIDStats">
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="theme-color" content="#fff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="canonical" href="https://gidstats.com/events/">
+      <meta property="og:locale" content="en" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Upcoming MMA events shedule - date, time and location" />
+  <meta property="og:description" content="Upcoming MMA events shedule: UFC, Bellator, LFA and others championchip" />
+  <meta property="og:url" content="https://gidstats.com/events/" />
+  <meta property="og:site_name" content="GIDStats" />
+  <meta property="og:image" content="https://gidstats.com/images/gidstats-default-cover-en.png" />
+  <meta property="og:image:secure_url" content="https://gidstats.com/images/gidstats-default-cover-en.png" />
+    <meta property="og:image:width" content="1000" />
+  <meta property="og:image:height" content="600" />
+      <link rel="alternate" hreflang="en" href="https://gidstats.com/events/" />
+    <link rel="alternate" hreflang="ru" href="https://gidstats.com/ru/events/" />
+  
+  <link href="/rss/" type="application/rss+xml" title="rss" rel="alternate" />
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/images/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#1db248">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#1db248">
+  <meta name="msapplication-config" content="/images/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#1db248">
+  <link rel="stylesheet" href="/css/main-min.css?v=1.6.77">
+    </head>
+<body>
+    <div class="overlay"></div>
+  <header class="header">
+    <div class="container">
+      <button class="burger-btn" type="button" aria-label="Menu"></button>
+            <a class="logo" href="/">
+        <img src="/images/gidstats-logo-en-new-green.png" alt="Gidstats"></a>
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://gidstats.com",
+          "logo": "https://gidstats.com/images/gidstats-logo-en-new-green.png"
+        }
+      </script>
+            <a class="header__bar" href="/" title="Home">
+
+      </a>
+      <nav class="nav">
+  <a class="nav__link on" href="/events/" title="Events">Events</a>  <a class="nav__link" href="/ranking/" title="ММА Rankings">ММА Rankings</a>  <a class="nav__link" href="/bk-top/" title="Bookmakers">Bookmakers</a>  <a class="nav__link" href="/donat/" title="Donate">Donate</a>  <a class="nav__link" href="/contact/" title="Contact">Contact</a>
+
+<div class="lang-top">
+	<div class="lang-top-title">Language:</div>
+	<div class="lang-top-box">
+						<a href="/en/" class="on">Eng</a>
+						<a href="/ru/">Рус</a>
+		
+	</div>
+</div>
+
+</nav>      <button class="loupe-button" type="button" aria-label="Search"></button>
+      <div class="search-form" method="get" action="/fighters/">
+                <script async src="https://cse.google.com/cse.js?cx=73011dc06d8cf4654"></script>
+                <div class="gcse-searchbox-only"></div>
+        <div class="gcse-searchresults-only"></div>
+      </div>
+
+    </div>
+  </header>
+    <main class="tournament__main">
+    <section class="tournament__main-top">
+      <div class="container  container--aside">
+        <section class="bio">
+          		<h1>Upcoming Events</h1>
+
+                    <section class="articles events-page">
+		<form id="frm_filter" action="/events/" method="get">
+		<select id="promotion" name="promotion">
+			<option data-url="" value="">All</option>
+						<option data-url="" value="ACA">ACA</option>
+						<option data-url="" value="AMC Fight Night">AMC Fight Night</option>
+						<option data-url="" value="ARES FC">ARES FC</option>
+						<option data-url="" value="BMF&amp;quot">BMF&quot</option>
+						<option data-url="" value="Bellator">Bellator</option>
+						<option data-url="" value="Brave CF">Brave CF</option>
+						<option data-url="" value="Cage Fury FC">Cage Fury FC</option>
+						<option data-url="" value="Cage Titans FC">Cage Titans FC</option>
+						<option data-url="" value="Cage Warriors FC">Cage Warriors FC</option>
+						<option data-url="" value="DWCS">DWCS</option>
+						<option data-url="" value="Invicta">Invicta</option>
+						<option data-url="" value="KSW">KSW</option>
+						<option data-url="" value="LFA">LFA</option>
+						<option data-url="" value="MMA Series">MMA Series</option>
+						<option data-url="" value="Oktagon">Oktagon</option>
+						<option data-url="" value="Open FC">Open FC</option>
+						<option data-url="" value="PFL">PFL</option>
+						<option data-url="" value="RIZIN">RIZIN</option>
+						<option data-url="" value="UAE Warriors">UAE Warriors</option>
+						<option data-url="" value="UFC" selected="selected">UFC</option>
+			
+		</select>
+	</form>
+		<div class="events-section__list home__events events__page events__page__actual">
+		
+
+				<a class="events__link  ufc" href="/events/ufc_fight_night-2560/">
+				<div class="events__table">
+                  <div class="events__date events__padding">22.11.2025<span>10:00 AM ET</span></div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Qatar</div>
+					  <div class="events__place">Doha, Qatar.</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+					<a class="events__link  ufc" href="/events/ufc_323-2567/">
+				<div class="events__table">
+                  <div class="events__date events__padding">06.12.2025<span>6:00 PM ET</span></div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 323</div>
+					  <div class="events__place">Las Vegas, USA.</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+					<a class="events__link  ufc" href="/events/ufc_fight_night-2561/">
+				<div class="events__table">
+                  <div class="events__date events__padding">13.12.2025<span>6:00 PM ET</span></div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 112</div>
+					  <div class="events__place">UFC APEX, Las Vegas, USA.</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+		
+		</div>
+	<h2>Ended Events</h2>
+	<div class="events-section__list home__events events__page">
+		
+			<a class="events__link  ended ufc" href="/events/ufc_322-2554/">
+				<div class="events__table">
+                  <div class="events__date events__padding">15.11.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 322</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2555/">
+				<div class="events__table">
+                  <div class="events__date events__padding">08.11.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 111</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2538/">
+				<div class="events__table">
+                  <div class="events__date events__padding">01.11.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 110</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_321-2522/">
+				<div class="events__table">
+                  <div class="events__date events__padding">25.10.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 321</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2524/">
+				<div class="events__table">
+                  <div class="events__date events__padding">18.10.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vancouver</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2525/">
+				<div class="events__table">
+                  <div class="events__date events__padding">11.10.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Rio</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_320-2523/">
+				<div class="events__table">
+                  <div class="events__date events__padding">04.10.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 320</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2519/">
+				<div class="events__table">
+                  <div class="events__date events__padding">27.09.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Perth</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2503/">
+				<div class="events__table">
+                  <div class="events__date events__padding">13.09.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Noche 3</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2509/">
+				<div class="events__table">
+                  <div class="events__date events__padding">06.09.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Paris</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2482/">
+				<div class="events__table">
+                  <div class="events__date events__padding">23.08.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Shanghai</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/road_to_ufc-2535/">
+				<div class="events__table">
+                  <div class="events__date events__padding">22.08.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">Road to UFC: Shanghai</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_319-2463/">
+				<div class="events__table">
+                  <div class="events__date events__padding">16.08.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 319</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2457/">
+				<div class="events__table">
+                  <div class="events__date events__padding">09.08.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 109</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2455/">
+				<div class="events__table">
+                  <div class="events__date events__padding">02.08.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 108</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2458/">
+				<div class="events__table">
+                  <div class="events__date events__padding">26.07.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Abu Dhabi</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2437/">
+				<div class="events__table">
+                  <div class="events__date events__padding">12.07.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Nashville</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_317-2397/">
+				<div class="events__table">
+                  <div class="events__date events__padding">28.06.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 317</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2416/">
+				<div class="events__table">
+                  <div class="events__date events__padding">21.06.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Baku</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2418/">
+				<div class="events__table">
+                  <div class="events__date events__padding">14.06.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Atlanta</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_316-2417/">
+				<div class="events__table">
+                  <div class="events__date events__padding">07.06.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 316</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2395/">
+				<div class="events__table">
+                  <div class="events__date events__padding">31.05.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 107</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2399/">
+				<div class="events__table">
+                  <div class="events__date events__padding">17.05.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 106</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_315-2388/">
+				<div class="events__table">
+                  <div class="events__date events__padding">10.05.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 315</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2382/">
+				<div class="events__table">
+                  <div class="events__date events__padding">03.05.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Des Moines</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2383/">
+				<div class="events__table">
+                  <div class="events__date events__padding">26.04.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Kansas City</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_314-2371/">
+				<div class="events__table">
+                  <div class="events__date events__padding">12.04.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 314</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2366/">
+				<div class="events__table">
+                  <div class="events__date events__padding">05.04.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 105</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2306/">
+				<div class="events__table">
+                  <div class="events__date events__padding">29.03.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Mexico</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc-london-2024/">
+				<div class="events__table">
+                  <div class="events__date events__padding">22.03.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC London</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_fight_night-2329/">
+				<div class="events__table">
+                  <div class="events__date events__padding">15.03.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC Vegas 104</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+				<a class="events__link  ended ufc" href="/events/ufc_313-2327/">
+				<div class="events__table">
+                  <div class="events__date events__padding">08.03.2025</div>
+                  <div class="events__logo"></div>
+                  <div class="events__body events__padding">
+                    <div class="events__info">
+                      <div class="events__home-title">UFC 313</div>
+                    </div>
+                  </div>
+                </div>
+			</a>
+		
+	</div>
+		<div class="pages">
+	<a href="#" class="on">1</a><a href="/events/page-2.html?promotion=UFC">2</a><a href="/events/page-3.html?promotion=UFC">3</a><a href="/events/page-2.html?promotion=UFC">Next</a><a href="/events/page-7.html?promotion=UFC">Last</a>
+	</div>
+
+	</section>
+<script>
+document.addEventListener("DOMContentLoaded", function (event) {
+	$('#promotion').change( function() {
+		var url = $(this).find(':selected').data('url');
+		if (url != ''){
+			parent.location = url
+		} else {
+			$('#frm_filter').submit();
+		}
+	});
+});
+</script>                  </section>
+        <aside class="aside">
+			<div class="events">
+	<h3 class="events__title">Next MMA Event</h3>
+	<div class="events-block">
+		<span class="address"><span class="bold">ACA Young Eagles 60</span><span class="text">Grozny, Chechnya, Russia.</span></span>
+		<p class="date">20.11.25</p>
+		<ul class="events-list">
+						<li class="events-list__item">
+				<a class="events-list__link" href="/events/aca_young_eagles_60-2591/islam_geroev_vs_eldar_munapov.html">
+					<p class="fighter">Islam Geroev </p>
+					<div class="img-wrapper">
+						<img src="/images/events-vs.png" alt="VS">
+					</div>
+					<p class="fighter">Eldar Munapov </p>
+				</a>
+			</li>
+						<li class="events-list__item">
+				<a class="events-list__link" href="/events/aca_young_eagles_60-2591/abdurakhman_yusupov_vs_magomed_chadaev.html">
+					<p class="fighter">Abdurakhman Yusupov </p>
+					<div class="img-wrapper">
+						<img src="/images/events-vs.png" alt="VS">
+					</div>
+					<p class="fighter">Magomed Chadaev </p>
+				</a>
+			</li>
+						<li class="events-list__item">
+				<a class="events-list__link" href="/events/aca_young_eagles_60-2591/khavid_dakaev_vs_eldar_nurmamedov.html">
+					<p class="fighter">Khavid Dakaev </p>
+					<div class="img-wrapper">
+						<img src="/images/events-vs.png" alt="VS">
+					</div>
+					<p class="fighter">Eldar Nurmamedov </p>
+				</a>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="events__footer">
+		<a class="events__footer-link" href="/events/aca_young_eagles_60-2591/">More &raquo;</a>
+	</div>
+</div>
+<div class="events-pairs">
+	<h3 class="events-pairs__title">Upcoming Events</h3>
+	<ul class="events-list">
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/cage_warriors_197-2585/">
+				<p class="date" content="2025-11-21T12:00">21.11.25</p>
+				<p class="pair">Cage Warriors 197</p>
+				<p class="address"><span class="text">Manchester, England.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/lfa_223-2586/">
+				<p class="date" content="2025-11-21T21:00">21.11.25</p>
+				<p class="pair">LFA 223</p>
+				<p class="address"><span class="text">Niagara Falls, New York, USA.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/open_fighting_championship_59-2603/">
+				<p class="date" content="2025-11-22T09:00">22.11.25</p>
+				<p class="pair">Open FC 59</p>
+				<p class="address"><span class="text">Irkutsk, Russia</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/ufc_fight_night-2560/">
+				<p class="date" content="2025-11-22T10:00">22.11.25</p>
+				<p class="pair">UFC Qatar</p>
+				<p class="address"><span class="text">Doha, Qatar.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/oktagon_80-2580/">
+				<p class="date" content="2025-11-22T12:00">22.11.25</p>
+				<p class="pair">OKTAGON 80</p>
+				<p class="address"><span class="text">Munich, Germany.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/cage_warriors_198-2584/">
+				<p class="date" content="2025-11-22T12:00">22.11.25</p>
+				<p class="pair">Cage Warriors 198</p>
+				<p class="address"><span class="text">Manchester, England.</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/aca_196-2571/">
+				<p class="date" content="2025-11-23T10:00">23.11.25</p>
+				<p class="pair">ACA 196</p>
+				<p class="address"><span class="text">Minsk, Belarus</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/brave_cf_102-2599/">
+				<p class="date" content="2025-11-23T13:00">23.11.25</p>
+				<p class="pair">BRAVE CF 102</p>
+				<p class="address"><span class="text">Ljubljana, Slovenia</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/aca-197/">
+				<p class="date" content="2025-12-05T09:00">05.12.25</p>
+				<p class="pair">ACA 197</p>
+				<p class="address"><span class="text">Moscow, Russia</span></p>
+							</a>
+		</li>
+				<li class="events-list__item">
+			<a class="events-list__link" href="/events/pfl_mena_4-2579/">
+				<p class="date" content="2025-12-05T10:30">05.12.25</p>
+				<p class="pair">PFL MENA 4</p>
+				<p class="address"><span class="text">Al Khobar, Saudi Arabia.</span></p>
+							</a>
+		</li>
+		
+	</ul>
+</div>
+	<!--  -->
+</aside>
+
+      </div>
+    </section>
+  </main>
+    <footer class="footer">
+    <div class="container">
+      <div class="logo-block">
+                <a class="logo-link" href="/">
+          <img src="/images/gidstats-logo-en-new-green.png" alt="Gidstats"></a>
+              </div>
+            <div class="copyright-block"><p class="copyright-block__text">Copyright &copy; 2019-2025 UFC</p>
+
+<p class="copyright-block__text">All rights reserved</p>
+</div>
+                  <div class="text-block">
+        <p class="text-block__text">All content on the site is for informational purposes only. We are not responsible for your actions.
+The site uses cookies for analytics purposes. If you do not agree with this, then leave the site.</p>
+      </div>
+                  <div class="about-block"><h3 class="about-block__title">Useful</h3>
+<a class="about-block__link" href="/events/">Events</a> <a class="about-block__link" href="https://gidstats.com/#result__events">Results</a> <a class="about-block__link" href="/ranking/">Rankings ММА</a> <a class="about-block__link" href="/canceled/">Canceled fights</a></div>
+                  <div class="jur-block"><h3 class="jur-block__title">Our Website</h3>
+<a class="jur-block__link" href="/privacy-policy/">Privacy Policy</a>
+<a class="jur-block__link" href="/donat/">Donate</a>
+<a class="jur-block__link" href="/about/">About Us</a>
+<a class="jur-block__link" href="/contact/">Contact</a></div>
+          </div>
+  </footer>
+    <!-- Фиксированный подвал -->
+  <div id="posterFixed" class="poster__fixed">
+      <a class="poster__fixed__link" href="https://gidfamily.ru/link/track/gidstats_sticky/source/campaign-ads" target="_blank" rel="nofollow">
+      <img class="poster__fixed__fighter poster__fixed__fighter--1" src="https://gidstats.com/img/fighters/0/0/1-652.png" alt="">
+        <div class="poster__fixed__text">
+          <div class="poster__fixed__event">
+          <div>UFC</div> Qatar
+          </div>
+          <div class="poster__fixed__freebet">
+          Bonus <span>Get</span>
+          </div>
+        </div>
+        <img class="poster__fixed__fighter poster__fixed__fighter--2" src="https://gidstats.com/img/fighters/0/0/2-643.png" alt="">
+      </a>
+      <span class="poster__fixed__closebtn" onclick="closeForm()">X</span>
+      <div class="poster__fixed__bgline"></div>
+      <div class="poster__fixed__bottomline"></div>
+    </div>
+    <script>
+    var arr_words = {
+      "all_rating": "All Rating",
+      "collapse": "Hide",
+      "show_all_stats": "Show<br class="br-768"> Stats",
+      "hide_all_stats": "Hide<br class="br-768"> stats",
+    };
+  </script>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/slick.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-main.js"></script>
+        <script type="text/javascript" src="/js/main.js?v=1.6.39"></script>
+  
+    <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KHN9RFRV');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHN9RFRV"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+</body>
+
+</html>
