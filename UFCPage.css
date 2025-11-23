@@ -1099,20 +1099,6 @@
   box-shadow: 0 12px 32px rgba(245, 181, 68, 0.25);
 }
 
-.hero-card-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.hero-card-value {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #f5b544;
-  text-shadow: 0 0 30px rgba(245, 181, 68, 0.6);
-}
 
 .analysis-performance {
   display: flex;
@@ -1184,45 +1170,10 @@
   transform: translateY(-2px);
 }
 
-.performance-hero {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
 
-.performance-hero-card {
-  background: linear-gradient(135deg, rgba(245, 181, 68, 0.12), rgba(255, 122, 69, 0.06));
-  border: 1px solid rgba(245, 181, 68, 0.25);
-  border-radius: 18px;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
 
-.performance-hero-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(245, 181, 68, 0.08), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
 
-.performance-hero-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(245, 181, 68, 0.25);
-  border-color: rgba(245, 181, 68, 0.4);
-}
 
-.performance-hero-card:hover::before {
-  opacity: 1;
-}
 
 .performance-category-grid {
   display: grid;
@@ -1642,14 +1593,6 @@
   align-items: center;
 }
 
-.career-win-methods-section {
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, rgba(15, 18, 26, 0.95), rgba(20, 24, 34, 0.92));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 2rem;
-  margin-bottom: 1rem;
-}
 
 
 /* ============================================
@@ -1689,22 +1632,7 @@
   margin-bottom: 1rem;
 }
 
-.strikes-hero-card {
-  background: linear-gradient(135deg, rgba(244, 67, 54, 0.12), rgba(229, 57, 53, 0.06));
-  border: 1px solid rgba(244, 67, 54, 0.25);
-  border-radius: 18px;
-  padding: 1.8rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition: all 0.3s ease;
-}
 
-.strikes-hero-card:hover {
-  border-color: rgba(244, 67, 54, 0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(244, 67, 54, 0.25);
-}
 
 .strikes-card-header {
   display: flex;
@@ -1860,22 +1788,7 @@
   margin-bottom: 1rem;
 }
 
-.grappling-hero-card {
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.12), rgba(66, 165, 245, 0.06));
-  border: 1px solid rgba(33, 150, 243, 0.25);
-  border-radius: 18px;
-  padding: 1.8rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition: all 0.3s ease;
-}
 
-.grappling-hero-card:hover {
-  border-color: rgba(33, 150, 243, 0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(33, 150, 243, 0.25);
-}
 
 .grappling-card-header {
   display: flex;
@@ -4649,12 +4562,6 @@
   font-size: 1.3rem;
 }
 
-.win-methods-comparison {
-  display: grid;
-  grid-template-columns: 2fr auto 2fr;
-  gap: 2.5rem;
-  align-items: start;
-}
 
 .win-methods-fighter {
   display: flex;
@@ -4662,22 +4569,7 @@
   gap: 1.2rem;
 }
 
-.win-method-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 1.4rem;
-  background: rgba(12, 15, 22, 0.6);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.3s ease;
-}
 
-.win-method-item:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(12, 15, 22, 0.75);
-  transform: translateX(4px);
-}
 
 .win-method-label {
   font-size: 0.8rem;
