@@ -1,33 +1,35 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import "./UFCPage.css";
+import "../styles/UFCPage.css";
 import { getFighterCountry } from "../api/fighterCountries";
-import { loadUFCData, mapFighterData, mapFightData } from "../api/localUFC";
+import { loadUFCData, mapFighterData, mapFightData, lookupFighter } from "../api/localUFC";
 import { getOddsByFighters, oddsToImpliedProbability } from "../api/hardcodedOdds";
+import FighterInsightsModal from './FighterInsightsModal';
+import FightModalHeader from './FightModalHeader';
 
 function formatLocation(location) {
   if (!location) return "Location TBA";
-  
+
   // 🔥 FIX: Handle string location from GIDStats
   if (typeof location === 'string') {
     const trimmed = location.trim();
     return trimmed || "Location TBA";
   }
-  
+
   // Handle object format (old API)
   if (typeof location === 'object') {
     const parts = [];
     if (location.city) parts.push(location.city);
     if (location.state) parts.push(location.state);
     if (location.country) parts.push(location.country);
-    
+
     return parts.length ? parts.join(", ") : "Location TBA";
   }
-  
+
   return "Location TBA";
 }
 
-const ANALYSIS_TABS = ["Matchup", "Performance", "Career", "Result", "Strikes", "Grappling", "Odds"];
+const ANALYSIS_TABS = ["Matchup", "Performance", "Fight History", "Career", "Result", "Strikes", "Grappling", "Odds"];
 const MIN_LOADING_MS = 650;
 
 const FLAG_IMAGE = {
@@ -723,6 +725,12 @@ function coalesce(...values) {
   return null;
 }
 
+const calculatePerFightAverage = (total, fights) => {
+  if (!total || !fights || fights === 0) return null;
+  const result = (total / fights).toFixed(2);
+  return parseFloat(result);
+};
+
 function cleanText(value) {
   if (value == null) {
     return "";
@@ -938,6 +946,70 @@ function formatOdds(value) {
   return numeric > 0 ? `+${numeric}` : `${numeric}`;
 }
 
+// ============================================
+// CONVERSION HELPERS - FOR DUAL UNITS
+// ============================================
+
+function inchesToCm(inches) {
+  if (!inches || isNaN(inches)) return null;
+  return (inches * 2.54).toFixed(1);
+}
+
+function lbsToKg(lbs) {
+  if (!lbs || isNaN(lbs)) return null;
+  return (lbs * 0.453592).toFixed(1);
+}
+
+function parseHeight(heightStr) {
+  if (!heightStr || heightStr === '—') return null;
+  
+  // Handle format like "5'11""
+  const match = heightStr.match(/(\d+)'(\d+)/);
+  if (match) {
+    const feet = parseInt(match[1]);
+    const inches = parseInt(match[2]);
+    return (feet * 12) + inches;
+  }
+  
+  return null;
+}
+
+function parseWeight(weightStr) {
+  if (!weightStr || weightStr === '—') return null;
+  
+  // Extract number from "135 lb" or "135.5 lb"
+  const match = weightStr.match(/([\d.]+)/);
+  if (match) {
+    return parseFloat(match[1]);
+  }
+  
+  return null;
+}
+
+function parseReach(reachStr) {
+  if (!reachStr || reachStr === '—') return null;
+  
+  // Extract number from "68 in"
+  const match = reachStr.match(/([\d.]+)/);
+  if (match) {
+    return parseFloat(match[1]);
+  }
+  
+  return null;
+}
+
+// Format stat with conversion
+function formatStatWithConversion(value, unit, convertFn) {
+  if (!value || value === '—') return { primary: '—', secondary: null };
+  
+  const converted = convertFn ? convertFn(value) : null;
+  
+  return {
+    primary: `${value} ${unit}`,
+    secondary: converted ? `${converted} ${unit === 'lb' ? 'kg' : 'cm'}` : null
+  };
+}
+
 function formatRecordFromTotals(wins, losses, draws, noContests) {
   if (wins == null && losses == null && draws == null) {
     return null;
@@ -1088,7 +1160,7 @@ function buildImageCandidates(name, fighterData = {}, profileData = {}, variant 
   // Dann API-Daten
   push(profileData.PhotoUrl || profileData.photoUrl);
   push(fighterData.PhotoUrl || fighterData.photoUrl);
-  
+
   // Fallback zu Schatten-Bildern
   push(SHADOW_FALLBACK);
   push(DEFAULT_AVATAR);
@@ -1308,6 +1380,33 @@ async function buildFighterSide(entry = {}, profile = {}, supplemental = {}) {
   // 🔥 DIRECT ACCESS TO SCRAPED DATA
   const allSources = { ...supplemental, ...profile, ...entry };
 
+  // 🔥 DEBUG: Check where GID Stats are
+  console.log('🔥 DATA STRUCTURE CHECK:', {
+    name,
+    supplementalKeys: Object.keys(supplemental || {}),
+    profileKeys: Object.keys(profile || {}),
+    entryKeys: Object.keys(entry || {}),
+
+    // Check if GID stats are nested somewhere
+    supplemental_sample: supplemental ? {
+      takedownsPerBout: supplemental.takedownsPerBout,
+      submissions: supplemental.submissions,
+      gidStats: supplemental.gidStats,
+    } : null,
+
+    profile_sample: profile ? {
+      takedownsPerBout: profile.takedownsPerBout,
+      submissions: profile.submissions,
+      gidStats: profile.gidStats,
+    } : null,
+
+    entry_sample: entry ? {
+      takedownsPerBout: entry.takedownsPerBout,
+      submissions: entry.submissions,
+      gidStats: entry.gidStats,
+    } : null,
+  });
+
   const matchupStats = {
     // 🔥 FIX: Read style from GIDStats
     style: cleanText(
@@ -1375,6 +1474,41 @@ async function buildFighterSide(entry = {}, profile = {}, supplemental = {}) {
     ),
   };
 
+  // 🔥 EXTRACT TOTAL FIGHTS from record
+  const recordParts = record?.split('-').map(num => parseInt(num) || 0);
+  const totalFights = recordParts && recordParts.length >= 2
+    ? recordParts.reduce((sum, num) => sum + num, 0)
+    : null;
+
+  console.log('🔥 Total Fights Calculated:', {
+    name,
+    record,
+    recordParts,
+    totalFights
+  });
+
+  console.log('🔥 ALL SOURCES CHECK:', {
+    name,
+    hasGIDStats: !!allSources,
+    totalKeys: Object.keys(allSources).length,
+
+    // 🔥 CHECK BOTH CASES
+    submissions_lower: allSources?.submissions,
+    SubmissionAttempts_pascal: allSources?.SubmissionAttempts,
+
+    takedownsPerBout_lower: allSources?.takedownsPerBout,
+    TakedownsPerFight_pascal: allSources?.TakedownsPerFight,
+
+    takedownsLanded_lower: allSources?.takedownsLanded,
+    TakedownsLanded_pascal: allSources?.TakedownsLanded,
+
+    // 🔥 FIND ALL SUBMISSION/TAKEDOWN KEYS
+    relevantKeys: Object.keys(allSources).filter(key =>
+      key.toLowerCase().includes('submission') ||
+      key.toLowerCase().includes('takedown')
+    ),
+  });
+
   // 🔥 STRIKES - USE SCRAPED DATA DIRECTLY
   const strikesStats = {
     sigLanded: coalesce(
@@ -1390,7 +1524,8 @@ async function buildFighterSide(entry = {}, profile = {}, supplemental = {}) {
     sigPerMinute: coalesce(
       allSources.SignificantStrikesLandedPerMinute,
       allSources.SLpM,
-      allSources.slpm
+      allSources.slpm,
+      allSources.sigStrikesLandedPerMin // 🔥 ADD THIS - from GIDStats
     ),
     totalLanded: coalesce(
       allSources.TotalStrikesLanded,
@@ -1404,28 +1539,35 @@ async function buildFighterSide(entry = {}, profile = {}, supplemental = {}) {
       allSources.SignificantStrikesAccuracy,
       allSources.SignificantStrikingAccuracy,
       allSources.StrAcc,
-      allSources.strAcc
+      allSources.strAcc,
+      allSources.strikingAccuracy // 🔥 ADD THIS - from GIDStats
     ),
     absorbed: coalesce(
       allSources.SignificantStrikesAbsorbedPerMinute,
       allSources.StrikesAbsorbedPerMinute,
       allSources.SApM,
-      allSources.sapm
+      allSources.sapm,
+      allSources.sigStrikesAbsorbedPerMin // 🔥 ADD THIS - from GIDStats
     ),
     defense: coalesce(
       allSources.SignificantStrikeDefense,
       allSources.StrikingDefense,
       allSources.StrDef,
-      allSources.strDef
+      allSources.strDef,
+      allSources.sigStrikeDefense // 🔥 ADD THIS - from GIDStats
     ),
     knockdowns: coalesce(
       allSources.Knockdowns,
       allSources.KnockdownsLanded,
       allSources.knockdowns
     ),
+    knockdownAverage: coalesce(
+      allSources.KnockdownAverage,
+      allSources.knockdownAvg // 🔥 ADD THIS - from GIDStats
+    ),
   };
 
-  // 🔥 GRAPPLING - USE SCRAPED DATA DIRECTLY
+  // 🔥 GRAPPLING - USE SCRAPED DATA + CALCULATE AVERAGES
   const grapplingStats = {
     takedownsLanded: coalesce(
       allSources.TakedownsLanded,
@@ -1438,29 +1580,57 @@ async function buildFighterSide(entry = {}, profile = {}, supplemental = {}) {
     takedownAccuracy: coalesce(
       allSources.TakedownAccuracy,
       allSources.TdAcc,
-      allSources.tdAcc
+      allSources.tdAcc,
+      allSources.takedownAccuracy
     ),
     takedownAverage: coalesce(
       allSources.TakedownsPer15Minutes,
       allSources.TakedownAveragePer15Minutes,
       allSources.TakedownAverage,
+      allSources.TakedownsPerFight,  // 🔥 ADD THIS
       allSources.TdAvg,
-      allSources.tdAvg
+      allSources.tdAvg,
+      allSources.takedownsPerBout,
+      // 🔥 FALLBACK: Calculate from TakedownsLanded + totalFights
+      totalFights ? calculatePerFightAverage(
+        coalesce(allSources.TakedownsLanded, allSources.takedownsLanded),
+        totalFights
+      ) : null
     ),
     takedownDefense: coalesce(
       allSources.TakedownDefense,
       allSources.TdDef,
-      allSources.tdDef
+      allSources.tdDef,
+      allSources.takedownDefense
     ),
     submissions: coalesce(
       allSources.SubmissionAttempts,
-      allSources.submissions
+      allSources.submissions,
+      allSources.submissionAttempts,
+      allSources.WinsSubmission,  // 🔥 FALLBACK: Use submission wins
+      allSources.WinsBySubmission
     ),
     submissionAverage: coalesce(
       allSources.SubmissionsPer15Minutes,
       allSources.SubmissionAverage,
       allSources.SubAvg,
-      allSources.subAvg
+      allSources.subAvg,
+      allSources.submissionsAvg,
+      allSources.SubmissionsPerFight,  // 🔥 ADD THIS
+      // 🔥 FALLBACK 1: Calculate from SubmissionAttempts + totalFights
+      totalFights ? calculatePerFightAverage(
+        coalesce(
+          allSources.SubmissionAttempts,
+          allSources.submissions,
+          allSources.submissionAttempts
+        ),
+        totalFights
+      ) : null,
+      // 🔥 FALLBACK 2: Calculate from WinsSubmission (minimum estimate)
+      totalFights ? calculatePerFightAverage(
+        coalesce(allSources.WinsSubmission, allSources.WinsBySubmission),
+        totalFights
+      ) : null
     ),
     reversals: coalesce(
       allSources.Reversals,
@@ -1475,46 +1645,46 @@ async function buildFighterSide(entry = {}, profile = {}, supplemental = {}) {
   };
 
   // 🔥 WIN METHODS - DIRECT FROM SCRAPED DATA
-const winMethodsStats = {
-  ko: coalesce(
-    allSources.WinsKO,
-    allSources.WinsKnockout,
-    allSources.WinsByKO,
-    allSources.winsKO
-  ) || 0,
-  
-  sub: coalesce(
-    allSources.WinsSub,
-    allSources.WinsSubmission,
-    allSources.WinsBySubmission,
-    allSources.winsSub
-  ) || 0,
-  
-  dec: coalesce(
-    allSources.WinsDec,
-    allSources.WinsDecision,
-    allSources.WinsByDecision,
-    allSources.winsDec
-  ) || 0,
-  
-  koPercent: parseFloat(coalesce(
-    allSources.WinMethodKOPercent,
-    allSources.WinMethodKOPercentage,
-    allSources.winMethodKOPercent
-  )) || 0,
-  
-  subPercent: parseFloat(coalesce(
-    allSources.WinMethodSubPercent,
-    allSources.WinMethodSubPercentage,
-    allSources.winMethodSubPercent
-  )) || 0,
-  
-  decPercent: parseFloat(coalesce(
-    allSources.WinMethodDecPercent,
-    allSources.WinMethodDecPercentage,
-    allSources.winMethodDecPercent
-  )) || 0,
-};
+  const winMethodsStats = {
+    ko: coalesce(
+      allSources.WinsKO,
+      allSources.WinsKnockout,
+      allSources.WinsByKO,
+      allSources.winsKO
+    ) || 0,
+
+    sub: coalesce(
+      allSources.WinsSub,
+      allSources.WinsSubmission,
+      allSources.WinsBySubmission,
+      allSources.winsSub
+    ) || 0,
+
+    dec: coalesce(
+      allSources.WinsDec,
+      allSources.WinsDecision,
+      allSources.WinsByDecision,
+      allSources.winsDec
+    ) || 0,
+
+    koPercent: parseFloat(coalesce(
+      allSources.WinMethodKOPercent,
+      allSources.WinMethodKOPercentage,
+      allSources.winMethodKOPercent
+    )) || 0,
+
+    subPercent: parseFloat(coalesce(
+      allSources.WinMethodSubPercent,
+      allSources.WinMethodSubPercentage,
+      allSources.winMethodSubPercent
+    )) || 0,
+
+    decPercent: parseFloat(coalesce(
+      allSources.WinMethodDecPercent,
+      allSources.WinMethodDecPercentage,
+      allSources.winMethodDecPercent
+    )) || 0,
+  };
 
   const resultLabel = cleanText(
     coalesce(
@@ -1595,42 +1765,24 @@ const winMethodsStats = {
     ),
   };
 
-console.log('🔥 Fighter Stats Built:', {
-  name,
-  // Strikes
-  slpm: strikesStats.sigPerMinute,
-  sigLanded: strikesStats.sigLanded,
-  sigAttempted: strikesStats.sigAttempted,
-  accuracy: strikesStats.accuracy,
-  absorbed: strikesStats.absorbed,
-  defense: strikesStats.defense,
-  knockdowns: strikesStats.knockdowns,
-  totalLanded: strikesStats.totalLanded,
-  totalAttempted: strikesStats.totalAttempted,
-  
-  // Grappling
-  tdAvg: grapplingStats.takedownAverage,
-  tdLanded: grapplingStats.takedownsLanded,
-  tdAttempted: grapplingStats.takedownsAttempted,
-  tdAcc: grapplingStats.takedownAccuracy,
-  tdDef: grapplingStats.takedownDefense,
-  subAvg: grapplingStats.submissionAverage,
-  submissions: grapplingStats.submissions,
-  controlSeconds: grapplingStats.controlSeconds,
-  
-  // Win Methods
-  winsKO: winMethodsStats.ko,
-  winsSub: winMethodsStats.sub,
-  winsDec: winMethodsStats.dec,
-  
-  // Matchup
-  age: matchupStats.age,
-  stance: matchupStats.stance,
-  
-  // Raw allSources check
-  rawSLpM: allSources.SLpM || allSources.slpm || allSources.SignificantStrikesLandedPerMinute,
-  rawTdAvg: allSources.TdAvg || allSources.tdAvg || allSources.TakedownsPer15Minutes,
-});
+  console.log('🔥 Fighter Stats Built:');
+  console.log('  Name:', name);
+  console.log('  Record:', record);
+  console.log('  Total Fights:', totalFights);
+  console.log('  ---');
+  console.log('  SubAvg:', grapplingStats.submissionAverage);
+  console.log('  Submissions:', grapplingStats.submissions);
+  console.log('  SubCalculated:', totalFights ? calculatePerFightAverage(
+    coalesce(allSources.submissions, allSources.SubmissionAttempts),
+    totalFights
+  ) : null);
+  console.log('  ---');
+  console.log('  TdAvg:', grapplingStats.takedownAverage);
+  console.log('  TdLanded:', grapplingStats.takedownsLanded);
+  console.log('  ---');
+  console.log('  RAW submissions:', allSources.submissions);
+  console.log('  RAW submissionsAvg:', allSources.submissionsAvg);
+  console.log('  RAW takedownsPerBout:', allSources.takedownsPerBout);
 
   // 🔥 CALCULATE FIGHTER BADGES
   const badges = {
@@ -1730,6 +1882,8 @@ console.log('🔥 Fighter Stats Built:', {
       const tdAvg = parseFloat(grapplingStats.takedownAverage) || 0;
       const tdAcc = parseFloat(grapplingStats.takedownAccuracy) || 0;
       const subAvg = parseFloat(grapplingStats.submissionAverage) || 0;
+      const submissions = parseFloat(grapplingStats.submissions) || 0;
+      const controlSeconds = parseFloat(grapplingStats.controlSeconds) || 0;
 
       // Standing danger (striking output + KD power)
       const standing = Math.min(100, Math.round((slpm / 6 * 60) + (kdAvg / 2 * 40)));
@@ -1737,8 +1891,40 @@ console.log('🔥 Fighter Stats Built:', {
       // Clinch danger (TD output + accuracy)
       const clinch = Math.min(100, Math.round((tdAvg / 5 * 60) + (tdAcc / 100 * 40)));
 
-      // Ground danger (submission threat)
-      const ground = Math.min(100, Math.round((subAvg / 2 * 100)));
+      // 🔥 IMPROVED Ground danger formula
+      let ground = 0;
+
+      // Base score from submission average (0-50 points)
+      const subAvgScore = Math.min(50, Math.round((subAvg / 1.5) * 50));
+      ground += subAvgScore;
+
+      console.log('🔥 SubAvg Score:', { subAvg, calculation: `(${subAvg} / 1.5) * 50`, score: subAvgScore, ground });
+
+      // Bonus from total submission attempts (0-30 points)
+      const subsScore = Math.min(30, Math.round((submissions / 5) * 30));
+      ground += subsScore;
+
+      console.log('🔥 Subs Score:', { submissions, calculation: `(${submissions} / 5) * 30`, score: subsScore, ground });
+
+      // Bonus from control time (0-20 points)
+      const controlMinutes = controlSeconds / 60;
+      const controlScore = Math.min(20, Math.round((controlMinutes / 3) * 20));
+      ground += controlScore;
+
+      console.log('🔥 Control Score:', { controlSeconds, controlMinutes, calculation: `(${controlMinutes} / 3) * 20`, score: controlScore, ground });
+
+      // Cap at 100
+      ground = Math.min(100, ground);
+
+      console.log('🔥 Ground Before Minimum:', ground);
+
+      // 🔥 Minimum score: If fighter has ANY submission threat, give at least 15
+      if (subAvg > 0 || submissions > 0 || controlSeconds > 60) {
+        ground = Math.max(15, ground);
+        console.log('🔥 Applied minimum 15:', ground);
+      }
+
+      console.log('🔥 FINAL Ground Score:', { name, ground });
 
       return { standing, clinch, ground };
     })(),
@@ -1842,35 +2028,38 @@ console.log('🔥 Fighter Stats Built:', {
 
   console.log('🔥 Advanced Metrics:', name, advancedMetrics);
 
-return {
-  id: entry.FighterId || entry.FighterID || profile.FighterId || profile.FighterID || name,
-  name,
-  record,
-  flagCode,
-  flagAssets: buildFlagAssets(
-    flagCode,
+  return {
+    id: entry.FighterId || entry.FighterID || profile.FighterId || profile.FighterID || name,
     name,
-    entry.FlagImageUrl,
-    entry.FlagImageURL,
-    entry.FlagIcon,
-    profile.FlagImageUrl,
-    profile.FlagImageURL,
-    profile.FlagIcon
-  ),
-  cardImages: buildImageCandidates(name, entry, profile, "card"),
-  fullImages: buildImageCandidates(name, entry, profile, "full"),
-  stats: {
-    matchup: matchupStats,
-    strikes: strikesStats,
-    grappling: grapplingStats,
-    winMethods: winMethodsStats, // 🔥 ADD THIS LINE
-  },
-  result: resultStats,
-  odds: oddsStats,
-  totals,
-  badges,
-  advancedMetrics,
-};
+    record,
+    flagCode,
+    flagAssets: buildFlagAssets(
+      flagCode,
+      name,
+      entry.FlagImageUrl,
+      entry.FlagImageURL,
+      entry.FlagIcon,
+      profile.FlagImageUrl,
+      profile.FlagImageURL,
+      profile.FlagIcon
+    ),
+    cardImages: buildImageCandidates(name, entry, profile, "card"),
+    fullImages: buildImageCandidates(name, entry, profile, "full"),
+    stats: {
+      matchup: matchupStats,
+      strikes: strikesStats,
+      grappling: grapplingStats,
+      winMethods: winMethodsStats,
+    },
+    result: resultStats,
+    odds: oddsStats,
+    totals,
+    badges,
+    advancedMetrics,
+
+    // 🔥 ADD FIGHT HISTORY
+    fightHistory: allSources.fightHistory || profile.fightHistory || entry.fightHistory || []
+  };
 }
 
 async function buildFight(fightData, fighterDirectory) {
@@ -2008,7 +2197,7 @@ async function buildFight(fightData, fighterDirectory) {
     // PRIORITY 3: Check fighter stats
     const fighter1Rounds = fighter1?.stats?.matchup?.rounds;
     const fighter2Rounds = fighter2?.stats?.matchup?.rounds;
-    
+
     if (fighter1Rounds || fighter2Rounds) {
       const fromFighter = fighter1Rounds || fighter2Rounds;
       const numeric = Number(fromFighter);
@@ -2023,7 +2212,7 @@ async function buildFight(fightData, fighterDirectory) {
       console.log('✅ Rounds fallback: Title Fight → 5');
       return 5;
     }
-    
+
     if (mainEvent) {
       console.log('✅ Rounds fallback: Main Event → 5');
       return 5;
@@ -2213,13 +2402,13 @@ function WinProbabilityBar({ leftWinProb, rightWinProb }) {
     <div className="win-probability-container">
       <div className="probability-bar-wrapper">
         <div className="probability-bar">
-          <div 
+          <div
             className="probability-fill left"
             style={{ width: `${leftWinProb || 50}%` }}
           >
             <span className="probability-value">{formatProb(leftWinProb)}</span>
           </div>
-          <div 
+          <div
             className="probability-fill right"
             style={{ width: `${rightWinProb || 50}%` }}
           >
@@ -2432,13 +2621,774 @@ function formatList(value) {
   return cleanText
 }
 
-function FightCard({ fight, accent, onOpenAnalysis }) {
+function analyzeFighterStreak(fightHistory) {
+  if (!fightHistory || fightHistory.length === 0) return null;
+
+  let currentStreak = 0;
+  let finishTypes = [];
+
+  for (let i = 0; i < fightHistory.length; i++) {
+    const fight = fightHistory[i];
+    if (fight.result === 'Win') {
+      currentStreak++;
+      finishTypes.push(fight.method);
+    } else {
+      break;
+    }
+  }
+
+  if (currentStreak >= 3) {
+    const allKO = finishTypes.every(method =>
+      method === 'KO/TKO' || method === 'N/A'
+    );
+    const allSub = finishTypes.every(method =>
+      method === 'Submission'
+    );
+    const allFinishes = finishTypes.every(method =>
+      method === 'KO/TKO' || method === 'Submission' || method === 'N/A'
+    );
+
+    return {
+      count: currentStreak,
+      isHotStreak: currentStreak >= 3,
+      isOnFire: currentStreak >= 5,
+      allByKO: allKO && currentStreak >= 3,
+      allBySub: allSub && currentStreak >= 3,
+      allFinishes: allFinishes && currentStreak >= 3,
+      finishTypes
+    };
+  }
+
+  return null;
+}
+
+function getLastFiveResults(fightHistory) {
+  if (!fightHistory || fightHistory.length === 0) {
+    return { results: [], isHotStreak: false };
+  }
+
+  const last5 = fightHistory.slice(0, 5);
+  const results = last5.map(fight => {
+    if (fight.result === 'Win') return 'W';
+    if (fight.result === 'Loss') return 'L';
+    return 'D'; // Draw
+  });
+
+  // Check if all 5 are wins
+  const isHotStreak = results.length === 5 && results.every(r => r === 'W');
+
+  return { results, isHotStreak };
+}
+
+// ============================================
+// MATCHUP TAB V3 - HELPER FUNCTIONS
+// ============================================
+
+function parseStatValue(value, type) {
+  if (!value || value === '—') return null;
+
+  switch (type) {
+    case 'height':
+      return parseHeight(value);
+    case 'weight':
+      return parseWeight(value);
+    case 'reach':
+      return parseReach(value);
+    case 'number':
+      const num = parseFloat(value);
+      return isNaN(num) ? null : num;
+    default:
+      return value;
+  }
+}
+
+function formatStatDisplay(rawValue, parsedValue, type) {
+  if (!rawValue || rawValue === '—') {
+    return { primary: '—', secondary: null };
+  }
+
+  switch (type) {
+    case 'height':
+      return {
+        primary: rawValue,
+        secondary: parsedValue ? `${inchesToCm(parsedValue)} cm` : null
+      };
+    case 'weight':
+      return {
+        primary: rawValue,
+        secondary: parsedValue ? `${lbsToKg(parsedValue)} kg` : null
+      };
+    case 'reach':
+      return {
+        primary: rawValue,
+        secondary: parsedValue ? `${inchesToCm(parsedValue)} cm` : null
+      };
+    default:
+      return { primary: rawValue, secondary: null };
+  }
+}
+
+function renderStatRowV3(stat) {
+  const { label, left, right, lowerIsBetter, type } = stat;
+
+  // Parse values
+  let leftVal = parseStatValue(left, type);
+  let rightVal = parseStatValue(right, type);
+
+  // Determine advantage
+  let leftAdv = false;
+  let rightAdv = false;
+
+  if (leftVal !== null && rightVal !== null && leftVal !== rightVal) {
+    if (lowerIsBetter) {
+      leftAdv = leftVal < rightVal;
+      rightAdv = rightVal < leftVal;
+    } else {
+      leftAdv = leftVal > rightVal;
+      rightAdv = rightVal > leftVal;
+    }
+  }
+
+  // Format display
+  const leftDisplay = formatStatDisplay(left, leftVal, type);
+  const rightDisplay = formatStatDisplay(right, rightVal, type);
+
+  return (
+    <div className="stat-row-v3" key={label}>
+      {/* LEFT - Value THEN Arrow (nach rechts) */}
+      <div className="stat-value-left">
+        <div className="value-with-arrow value-with-arrow--left">
+          <span className={`stat-primary ${leftAdv ? 'advantage' : rightAdv ? 'disadvantage' : ''}`}>
+            {leftDisplay.primary}
+          </span>
+          {leftAdv && <span className="arrow-indicator advantage">↑</span>}
+          {!leftAdv && rightAdv && <span className="arrow-indicator disadvantage">↓</span>}
+        </div>
+        {leftDisplay.secondary && (
+          <span className={`stat-secondary ${leftAdv ? 'advantage' : rightAdv ? 'disadvantage' : ''}`}>
+            {leftDisplay.secondary}
+          </span>
+        )}
+      </div>
+
+      {/* CENTER */}
+      <div className="stat-vs-divider">
+        <div className="vs-line"></div>
+        <span className="vs-text">{label}</span>
+        <div className="vs-line"></div>
+      </div>
+
+      {/* 🔥 RIGHT - Arrow THEN Value (Pfeil nach links/innen) */}
+      <div className="stat-value-right">
+        <div className="value-with-arrow value-with-arrow--right">
+          {rightAdv && <span className="arrow-indicator advantage">↑</span>}
+          {!rightAdv && leftAdv && <span className="arrow-indicator disadvantage">↓</span>}
+          <span className={`stat-primary ${rightAdv ? 'advantage' : leftAdv ? 'disadvantage' : ''}`}>
+            {rightDisplay.primary}
+          </span>
+        </div>
+        {rightDisplay.secondary && (
+          <span className={`stat-secondary ${rightAdv ? 'advantage' : leftAdv ? 'disadvantage' : ''}`}>
+            {rightDisplay.secondary}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function renderMatchupTabV3(fight) {
   const left = fight.fighter1;
   const right = fight.fighter2;
 
-    // 🔥 NEW: Insights Popup State
+  // Physical Stats
+  const physicalStats = [
+    {
+      label: 'Age',
+      left: left.stats.matchup.age,
+      right: right.stats.matchup.age,
+      lowerIsBetter: true,
+      type: 'number'
+    },
+    {
+      label: 'Height',
+      left: left.stats.matchup.height,
+      right: right.stats.matchup.height,
+      type: 'height'
+    },
+    {
+      label: 'Weight',
+      left: left.stats.matchup.weight,
+      right: right.stats.matchup.weight,
+      type: 'weight'
+    },
+    {
+      label: 'Reach',
+      left: left.stats.matchup.reach,
+      right: right.stats.matchup.reach,
+      type: 'reach'
+    }
+  ];
+
+  // Style Stats
+  const styleStats = [
+    {
+      label: 'Fighting Style',
+      left: left.stats.matchup.style,
+      right: right.stats.matchup.style,
+      type: 'text'
+    },
+    {
+      label: 'Stance',
+      left: left.stats.matchup.stance,
+      right: right.stats.matchup.stance,
+      type: 'text'
+    }
+  ];
+
+  return (
+    <div className="analysis-matchup">
+      {/* Physical Attributes */}
+      <div className="matchup-stat-module">
+        <div className="module-header">
+          <span className="module-title">Physical Attributes</span>
+        </div>
+        {physicalStats.map(stat => renderStatRowV3(stat))}
+      </div>
+
+      <div className="section-separator"></div>
+
+      {/* Fighting Style */}
+      <div className="matchup-stat-module">
+        <div className="module-header">
+          <span className="module-title">Fighting Style</span>
+        </div>
+        {styleStats.map(stat => renderStatRowV3(stat))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Get streak badge configuration
+ */
+function getStreakBadge(streak) {
+  if (!streak) return null;
+
+  if (streak.isOnFire) {
+    return {
+      text: `🔥 ${streak.count} WIN STREAK - ON FIRE!`,
+      class: 'streak-on-fire',
+      color: '#ff4500'
+    };
+  } else if (streak.allByKO) {
+    return {
+      text: `💥 ${streak.count} WINS - ALL BY KO/TKO`,
+      class: 'streak-ko',
+      color: '#ff6b6b'
+    };
+  } else if (streak.allBySub) {
+    return {
+      text: `🎯 ${streak.count} WINS - ALL BY SUBMISSION`,
+      class: 'streak-sub',
+      color: '#4ecdc4'
+    };
+  } else if (streak.allFinishes) {
+    return {
+      text: `⚡ ${streak.count} WIN STREAK - ALL FINISHES`,
+      class: 'streak-finish',
+      color: '#f5b544'
+    };
+  } else {
+    return {
+      text: `🔥 ${streak.count} WIN STREAK`,
+      class: 'streak-hot',
+      color: '#f5b544'
+    };
+  }
+}
+
+function formatStreakText(badge) {
+  // 🔥 BETTER NULL CHECK
+  if (!badge || !badge.text) return 'None';
+
+  // Extract just the number from the badge text
+  const match = badge.text.match(/(\d+)/);
+  if (!match) return badge.text;
+
+  const count = match[1];
+
+  // Return clean format: "5 Win Streak"
+  return `${count} Win Streak`;
+}
+
+// ============================================================
+// INSIGHTS POPUP - GLOBAL COMPONENT
+// ============================================================
+function InsightsPopup({ fight, onClose }) {
+  const insightsRef = useRef(null);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  // Prevent body scroll when popup is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  if (!fight) return null;
+
+  const left = fight.fighter1;
+  const right = fight.fighter2;
+
+  return createPortal(
+    <div className="insights-overlay" onClick={onClose}>
+      <div className="insights-popup" ref={insightsRef} onClick={(e) => e.stopPropagation()}>
+        <div className="insights-header">
+          <span className="insights-title">Fighter Insights</span>
+          <button className="insights-close" onClick={onClose}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="insights-body">
+          {/* LEFT COLUMN - Fighter Info */}
+          <div className="insights-column insights-column--fighters">
+            <div className="insights-grid">
+
+              {/* Sniper Index */}
+              <div className="metric-row metric-row--prominent">
+                <div className="metric-cell metric-cell--left">
+                  <span className="metric-label">Efficiency Rating</span>
+                  <span className="metric-value metric-value--large">
+                    {left.badges?.fighterType?.type === 'striker' ? '⚡' : '🤼'} Sniper Index
+                  </span>
+                  <span className="metric-subtext">
+                    {(parseFloat(left.stats?.strikes?.sigPerMinute || 0) /
+                      parseFloat(left.stats?.strikes?.absorbed || 1)).toFixed(2)}
+                  </span>
+                </div>
+                <div className="metric-divider">VS</div>
+                <div className="metric-cell metric-cell--right">
+                  <span className="metric-label">Efficiency Rating</span>
+                  <span className="metric-value metric-value--large">
+                    {right.badges?.fighterType?.type === 'striker' ? '⚡' : '🤼'} Sniper Index
+                  </span>
+                  <span className="metric-subtext">
+                    {(parseFloat(right.stats?.strikes?.sigPerMinute || 0) /
+                      parseFloat(right.stats?.strikes?.absorbed || 1)).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Fighter Names */}
+              <div className="fighter-names-row">
+                <h4 className="insights-fighter-name insights-fighter-name--left">
+                  {left.name.split(' ')[0]}
+                </h4>
+                <div className="insights-divider-center">
+                  <span>VS</span>
+                </div>
+                <h4 className="insights-fighter-name insights-fighter-name--right">
+                  {right.name.split(' ')[0]}
+                </h4>
+              </div>
+
+              {/* Status */}
+              <div className="badge-row">
+                <div className="badge-cell badge-cell--left">
+                  {left.badges?.ageStatus && (
+                    <div className={`insight-badge age-${left.badges.ageStatus.color}`}>
+                      <span className="badge-label">Status</span>
+                      <span className="badge-value">{left.badges.ageStatus.label}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="badge-cell badge-cell--right">
+                  {right.badges?.ageStatus && (
+                    <div className={`insight-badge age-${right.badges.ageStatus.color}`}>
+                      <span className="badge-label">Status</span>
+                      <span className="badge-value">{right.badges.ageStatus.label}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Chin Rating */}
+              <div className="badge-row">
+                <div className="badge-cell badge-cell--left">
+                  <div className="insight-badge chin-rating">
+                    <span className="badge-label">Chin</span>
+                    <span className="badge-value">
+                      {(() => {
+                        let score = 100;
+                        const koLosses = left.totals?.lossesKO || 0;
+                        const age = parseInt(left.stats?.matchup?.age) || 0;
+                        score -= koLosses * 15;
+                        if (age > 35) score -= (age - 35) * 5;
+                        score = Math.max(0, Math.round(score));
+                        if (score > 75) return '🛡️ Iron';
+                        if (score > 60) return '✅ Solid';
+                        if (score > 40) return '⚠️ Suspect';
+                        return '🔴 Weak';
+                      })()}
+                    </span>
+                  </div>
+                </div>
+                <div className="badge-cell badge-cell--right">
+                  <div className="insight-badge chin-rating">
+                    <span className="badge-label">Chin</span>
+                    <span className="badge-value">
+                      {(() => {
+                        let score = 100;
+                        const koLosses = right.totals?.lossesKO || 0;
+                        const age = parseInt(right.stats?.matchup?.age) || 0;
+                        score -= koLosses * 15;
+                        if (age > 35) score -= (age - 35) * 5;
+                        score = Math.max(0, Math.round(score));
+                        if (score > 75) return '🛡️ Iron';
+                        if (score > 60) return '✅ Solid';
+                        if (score > 40) return '⚠️ Suspect';
+                        return '🔴 Weak';
+                      })()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Type */}
+              <div className="badge-row">
+                <div className="badge-cell badge-cell--left">
+                  {left.badges?.fighterType && (
+                    <div className="insight-badge type">
+                      <span className="badge-label">Type</span>
+                      <span className="badge-value">{left.badges.fighterType.label}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="badge-cell badge-cell--right">
+                  {right.badges?.fighterType && (
+                    <div className="insight-badge type">
+                      <span className="badge-label">Type</span>
+                      <span className="badge-value">{right.badges.fighterType.label}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Style */}
+              <div className="badge-row">
+                <div className="badge-cell badge-cell--left">
+                  {left.badges?.fightingStyle && (
+                    <div className="insight-badge style">
+                      <span className="badge-label">Style</span>
+                      <span className="badge-value">{left.badges.fightingStyle.label}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="badge-cell badge-cell--right">
+                  {right.badges?.fightingStyle && (
+                    <div className="insight-badge style">
+                      <span className="badge-label">Style</span>
+                      <span className="badge-value">{right.badges.fightingStyle.label}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Last 5 Results */}
+              <div className="streak-badges-row">
+                <div className="streak-badge-cell streak-badge-cell--left">
+                  {(() => {
+                    const { results, isHotStreak } = getLastFiveResults(left?.fightHistory);
+                    return (
+                      <div className={`win-loss-badge ${isHotStreak ? 'hot-streak' : ''}`}>
+                        <span className="win-loss-badge-label">Last 5</span>
+                        <div className="win-loss-history">
+                          {results.length > 0 ? (
+                            <>
+                              {results.map((result, i) => (
+                                <div
+                                  key={i}
+                                  className={`result-indicator ${result === 'W' ? 'win' : result === 'L' ? 'loss' : 'draw'}`}
+                                >
+                                  {result}
+                                </div>
+                              ))}
+                              {isHotStreak && <span className="hot-streak-icon">🔥</span>}
+                            </>
+                          ) : (
+                            <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>No data</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+
+                <div className="streak-badge-cell streak-badge-cell--right">
+                  {(() => {
+                    const { results, isHotStreak } = getLastFiveResults(right?.fightHistory);
+                    return (
+                      <div className={`win-loss-badge ${isHotStreak ? 'hot-streak' : ''}`}>
+                        <span className="win-loss-badge-label">Last 5</span>
+                        <div className="win-loss-history">
+                          {results.length > 0 ? (
+                            <>
+                              {results.map((result, i) => (
+                                <div
+                                  key={i}
+                                  className={`result-indicator ${result === 'W' ? 'win' : result === 'L' ? 'loss' : 'draw'}`}
+                                >
+                                  {result}
+                                </div>
+                              ))}
+                              {isHotStreak && <span className="hot-streak-icon">🔥</span>}
+                            </>
+                          ) : (
+                            <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>No data</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              {/* Gas Tank */}
+              <div className="gas-tank-row">
+                <div className="gas-tank-cell">
+                  <div className="gas-tank-bar">
+                    <span className="gas-tank-label">Gas Tank</span>
+                    <div className="gas-tank-fill" style={{
+                      width: `${(() => {
+                        const totalWins = left.totals?.wins || 0;
+                        const decWins = left.stats?.winMethods?.dec || 0;
+                        if (totalWins === 0) return 50;
+                        const decRate = (decWins / totalWins) * 100;
+                        return decRate > 60 ? 85 : decRate > 40 ? 65 : 40;
+                      })()}%`,
+                      background: 'linear-gradient(90deg, #4caf50, #81c784)'
+                    }}>
+                      <span className="gas-tank-value">
+                        {(() => {
+                          const totalWins = left.totals?.wins || 0;
+                          const decWins = left.stats?.winMethods?.dec || 0;
+                          if (totalWins === 0) return 'Unknown';
+                          const decRate = (decWins / totalWins) * 100;
+                          return decRate > 60 ? 'Marathon' : decRate > 40 ? 'Solid' : 'Front Runner';
+                        })()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="gas-tank-cell">
+                  <div className="gas-tank-bar">
+                    <span className="gas-tank-label">Gas Tank</span>
+                    <div className="gas-tank-fill" style={{
+                      width: `${(() => {
+                        const totalWins = right.totals?.wins || 0;
+                        const decWins = right.stats?.winMethods?.dec || 0;
+                        if (totalWins === 0) return 50;
+                        const decRate = (decWins / totalWins) * 100;
+                        return decRate > 60 ? 85 : decRate > 40 ? 65 : 40;
+                      })()}%`,
+                      background: 'linear-gradient(90deg, #4caf50, #81c784)'
+                    }}>
+                      <span className="gas-tank-value">
+                        {(() => {
+                          const totalWins = right.totals?.wins || 0;
+                          const decWins = right.stats?.winMethods?.dec || 0;
+                          if (totalWins === 0) return 'Unknown';
+                          const decRate = (decWins / totalWins) * 100;
+                          return decRate > 60 ? 'Marathon' : decRate > 40 ? 'Solid' : 'Front Runner';
+                        })()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN - Stats */}
+          <div className="insights-column insights-column--stats">
+            {/* TSI */}
+            <div className="insights-section insights-section--tsi">
+              <div className="section-title">Wrestling Control Projection</div>
+              <div className="tsi-display">
+                {(() => {
+                  const tdAvgA = parseFloat(left.stats?.grappling?.takedownAverage) || 0;
+                  const tdAccA = parseFloat(left.stats?.grappling?.takedownAccuracy) || 0;
+                  const tdDefB = parseFloat(right.stats?.grappling?.takedownDefense) || 0;
+                  const effectiveTDs = tdAvgA * (tdAccA / 100);
+                  const resistanceFactor = tdDefB / 100;
+                  const tsi = effectiveTDs - (resistanceFactor * tdAvgA);
+                  let description;
+                  if (tsi > 2.0) description = '🔴 Dominant Control Expected';
+                  else if (tsi > 1.0) description = '🟡 Clear Grappling Edge';
+                  else if (tsi > 0) description = '🟢 Slight Advantage';
+                  else if (tsi > -1.0) description = '⚪ Even Matchup';
+                  else description = '🔵 Defensive Edge (Fighter B)';
+                  return (
+                    <>
+                      <div className="tsi-value">{tsi > 0 ? '+' : ''}{tsi.toFixed(1)} TDs</div>
+                      <div className="tsi-description">{description}</div>
+                      <div className="tsi-bar">
+                        <div className="tsi-bar-fill" style={{
+                          width: `${Math.min(Math.abs(tsi) * 20, 100)}%`,
+                          background: tsi > 0 ? 'linear-gradient(90deg, #f5b544, #ff7a45)' : 'linear-gradient(90deg, #2196f3, #4caf50)'
+                        }} />
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* Finish Probability */}
+            {left.advancedMetrics?.finishProb && right.advancedMetrics?.finishProb ? (
+              <div className="insights-section">
+                <div className="section-title">Finish Probability</div>
+                <div className="stats-grid">
+                  <div className="stat-item-label">KO/TKO</div>
+                  <div className="stat-row">
+                    <span className="stat-value stat-value--left">{left.advancedMetrics.finishProb.ko}%</span>
+                    <span className="stat-vs">vs</span>
+                    <span className="stat-value stat-value--right">{right.advancedMetrics.finishProb.ko}%</span>
+                  </div>
+                  <div className="stat-item-label">Submission</div>
+                  <div className="stat-row">
+                    <span className="stat-value stat-value--left">{left.advancedMetrics.finishProb.sub}%</span>
+                    <span className="stat-vs">vs</span>
+                    <span className="stat-value stat-value--right">{right.advancedMetrics.finishProb.sub}%</span>
+                  </div>
+                  <div className="stat-item-label">Decision</div>
+                  <div className="stat-row">
+                    <span className="stat-value stat-value--left">{left.advancedMetrics.finishProb.dec}%</span>
+                    <span className="stat-vs">vs</span>
+                    <span className="stat-value stat-value--right">{right.advancedMetrics.finishProb.dec}%</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="insights-section">
+                <div className="section-title">Finish Probability</div>
+                <div className="stats-grid">
+                  <div className="stat-row">
+                    <span style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.3)', textAlign: 'center', width: '100%' }}>
+                      No data available
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Danger Zones */}
+            {left.advancedMetrics?.dangerZones && right.advancedMetrics?.dangerZones && (
+              <div className="insights-section">
+                <div className="section-title">Danger Rating</div>
+                <div className="stats-grid">
+                  <div className="stat-item-label">Standing</div>
+                  <div className="stat-row">
+                    <span className="stat-value stat-value--left">{left.advancedMetrics.dangerZones.standing}</span>
+                    <span className="stat-vs">vs</span>
+                    <span className="stat-value stat-value--right">{right.advancedMetrics.dangerZones.standing}</span>
+                  </div>
+                  <div className="stat-item-label">Clinch</div>
+                  <div className="stat-row">
+                    <span className="stat-value stat-value--left">{left.advancedMetrics.dangerZones.clinch}</span>
+                    <span className="stat-vs">vs</span>
+                    <span className="stat-value stat-value--right">{right.advancedMetrics.dangerZones.clinch}</span>
+                  </div>
+                  <div className="stat-item-label">Submission Threat</div>
+                  <div className="stat-row">
+                    <span className="stat-value stat-value--left">
+                      {left.advancedMetrics.dangerZones.ground > 0 ? left.advancedMetrics.dangerZones.ground : <span style={{ fontSize: '0.6rem', opacity: 0.5 }}>Low</span>}
+                    </span>
+                    <span className="stat-vs">vs</span>
+                    <span className="stat-value stat-value--right">
+                      {right.advancedMetrics.dangerZones.ground > 0 ? right.advancedMetrics.dangerZones.ground : <span style={{ fontSize: '0.6rem', opacity: 0.5 }}>Low</span>}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* X-Factors */}
+            {(left.advancedMetrics?.xFactors?.length > 0 || right.advancedMetrics?.xFactors?.length > 0) && (
+              <div className="insights-section">
+                <div className="section-title">X-Factors</div>
+                <div className="xfactors-grid">
+                  <div className="xfactors-column">
+                    {left.advancedMetrics.xFactors.map((factor, i) => (
+                      <span key={i} className="xfactor-tag">{factor}</span>
+                    ))}
+                    {left.advancedMetrics.xFactors.length === 0 && <span className="xfactor-tag xfactor-tag--empty">None</span>}
+                  </div>
+                  <div className="xfactors-divider">VS</div>
+                  <div className="xfactors-column">
+                    {right.advancedMetrics.xFactors.map((factor, i) => (
+                      <span key={i} className="xfactor-tag">{factor}</span>
+                    ))}
+                    {right.advancedMetrics.xFactors.length === 0 && <span className="xfactor-tag xfactor-tag--empty">None</span>}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Stylistic Advantage */}
+        {(() => {
+          const leftType = left.badges?.fighterType?.type;
+          const rightType = right.badges?.fighterType?.type;
+          if (leftType === 'grappler' && rightType === 'striker') {
+            return (
+              <div className="insights-advantage">
+                <span className="advantage-text">{left.name.split(' ')[0]} has stylistic advantage (+15%)</span>
+              </div>
+            );
+          }
+          if (rightType === 'grappler' && leftType === 'striker') {
+            return (
+              <div className="insights-advantage">
+                <span className="advantage-text">{right.name.split(' ')[0]} has stylistic advantage (+15%)</span>
+              </div>
+            );
+          }
+          return null;
+        })()}
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function FightCard({ fight, accent, onOpenAnalysis, onOpenInsights }) {
+  const left = fight.fighter1;
+  const right = fight.fighter2;
+
   const [showInsights, setShowInsights] = useState(false);
   const insightsRef = useRef(null);
+  const cardRef = useRef(null);
 
   // Close popup when clicking outside
   useEffect(() => {
@@ -2454,10 +3404,11 @@ function FightCard({ fight, accent, onOpenAnalysis }) {
     }
   }, [showInsights]);
 
+
   // Dynamic font size based on name length + abbreviate middle names
   const formatFighterName = (name) => {
     if (!name) return '';
-    
+
     // If name is too long, abbreviate middle names
     if (name.length > 17) {
       const parts = name.split(' ');
@@ -2466,7 +3417,7 @@ function FightCard({ fight, accent, onOpenAnalysis }) {
         return `${parts[0]} ${parts[1][0]}. ${parts[2]}`;
       }
     }
-    
+
     return name;
   };
 
@@ -2570,387 +3521,114 @@ function FightCard({ fight, accent, onOpenAnalysis }) {
   // 🔥 GET WEIGHT CLASS DISPLAY
   const weightClassDisplay = getWeightClassDisplay();
 
-return (
-  <article className={cardClassNames}>
-    <header className="fight-card__header">
-      <div className="fight-card__side fight-card__side--left">
-        <span className={`fight-card__name ${getNameClass(left.name)}`}>
-          {formatFighterName(left.name)}
-        </span>
-        <span className="fight-card__record">{left.record}</span>
-      </div>
-      <div className="fight-card__versus">
-        <div className="fight-card__flags">
-          <img src={flagSrc1} alt={`${left.name} flag`} loading="lazy" onError={handleFlagError1} />
-          <span className="fight-card__vs">VS</span>
-          <img src={flagSrc2} alt={`${right.name} flag`} loading="lazy" onError={handleFlagError2} />
-        </div>
-        {/* 🔥 Weight Class */}
-        {weightClassDisplay && (
-          <span className="fight-card__meta">{weightClassDisplay}</span>
-        )}
-      </div>
-      <div className="fight-card__side fight-card__side--right">
-        <span className={`fight-card__name ${getNameClass(right.name)}`}>
-          {formatFighterName(right.name)}
-        </span>
-        <span className="fight-card__record">{right.record}</span>
-      </div>
-    </header>
-
-    {/* 🔥 FIGHTER IMAGES */}
-    <div className="fight-card__images">
-      <img src={cardSrc1} alt={left.name} onError={handleCardError1} loading="lazy" />
-      <img src={cardSrc2} alt={right.name} onError={handleCardError2} loading="lazy" />
-    </div>
-
-{/* WIN PROBABILITY BAR WITH INSIGHTS BUTTON */}
-{(() => {
-  // Get odds (existing logic)
-  let leftOddsImplied = left.odds?.implied;
-  let rightOddsImplied = right.odds?.implied;
-  let leftOddsMoneyline = left.odds?.moneyline;
-  let rightOddsMoneyline = right.odds?.moneyline;
-
-  if (!leftOddsImplied || !rightOddsImplied) {
-    const hardcodedOdds = getOddsByFighters(left.name, right.name);
-    if (hardcodedOdds) {
-      leftOddsMoneyline = hardcodedOdds.fighter1Odds;
-      rightOddsMoneyline = hardcodedOdds.fighter2Odds;
-      leftOddsImplied = oddsToImpliedProbability(leftOddsMoneyline);
-      rightOddsImplied = oddsToImpliedProbability(rightOddsMoneyline);
-    }
-  }
-
-  let leftProb = null;
-  let rightProb = null;
-
-  if (leftOddsImplied && rightOddsImplied && leftOddsImplied > 0 && rightOddsImplied > 0) {
-    const total = leftOddsImplied + rightOddsImplied;
-    leftProb = Math.round((leftOddsImplied / total) * 100);
-    rightProb = Math.round((rightOddsImplied / total) * 100);
-    if (leftProb + rightProb !== 100) {
-      rightProb = 100 - leftProb;
-    }
-  }
-
-  if (leftProb === null || rightProb === null) {
-    return (
-      <div className="win-probability-container">
-        <div className="probability-bar-wrapper probability-bar-no-data">
-          <span className="no-data-text">NO DATA YET — SOON</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="win-probability-container">
-      <div className="probability-bar-wrapper">
-        <div className="probability-bar">
-          <div className="probability-fill left" style={{ width: `${leftProb}%` }}>
-            <span className="probability-value">{leftProb}%</span>
-          </div>
-          
-          <div className="probability-fill right" style={{ width: `${rightProb}%` }}>
-            <span className="probability-value">{rightProb}%</span>
-          </div>
+    <article className={cardClassNames} ref={cardRef}>
+      <header className="fight-card__header">
+        <div className="fight-card__side fight-card__side--left">
+          <span className={`fight-card__name ${getNameClass(left.name)}`}>
+            {formatFighterName(left.name)}
+          </span>
+          <span className="fight-card__record">{left.record}</span>
         </div>
+        <div className="fight-card__versus">
+          <div className="fight-card__flags">
+            <img src={flagSrc1} alt={`${left.name} flag`} loading="lazy" onError={handleFlagError1} />
+            <span className="fight-card__vs">VS</span>
+            <img src={flagSrc2} alt={`${right.name} flag`} loading="lazy" onError={handleFlagError2} />
+          </div>
+          {/* 🔥 Weight Class */}
+          {weightClassDisplay && (
+            <span className="fight-card__meta">{weightClassDisplay}</span>
+          )}
+        </div>
+        <div className="fight-card__side fight-card__side--right">
+          <span className={`fight-card__name ${getNameClass(right.name)}`}>
+            {formatFighterName(right.name)}
+          </span>
+          <span className="fight-card__record">{right.record}</span>
+        </div>
+      </header>
 
-        {/* 🔥 INSIGHTS BUTTON - TOP RIGHT */}
-        <button 
-          className="insights-toggle-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowInsights(!showInsights);
-          }}
-          title="View Fighter Insights"
-        >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="16" x2="12" y2="12" />
-            <circle cx="12" cy="8" r="0.5" fill="currentColor" />
-          </svg>
-        </button>
-        {showInsights && (
-          <div className="insights-popup" ref={insightsRef}>
-            <div className="insights-header">
-              <span className="insights-title">Fighter Insights</span>
+      {/* 🔥 FIGHTER IMAGES */}
+      <div className="fight-card__images">
+        <img src={cardSrc1} alt={left.name} onError={handleCardError1} loading="lazy" />
+        <img src={cardSrc2} alt={right.name} onError={handleCardError2} loading="lazy" />
+      </div>
+
+      {/* WIN PROBABILITY BAR WITH INSIGHTS BUTTON */}
+      {(() => {
+        // Get odds (existing logic)
+        let leftOddsImplied = left.odds?.implied;
+        let rightOddsImplied = right.odds?.implied;
+        let leftOddsMoneyline = left.odds?.moneyline;
+        let rightOddsMoneyline = right.odds?.moneyline;
+
+        if (!leftOddsImplied || !rightOddsImplied) {
+          const hardcodedOdds = getOddsByFighters(left.name, right.name);
+          if (hardcodedOdds) {
+            leftOddsMoneyline = hardcodedOdds.fighter1Odds;
+            rightOddsMoneyline = hardcodedOdds.fighter2Odds;
+            leftOddsImplied = oddsToImpliedProbability(leftOddsMoneyline);
+            rightOddsImplied = oddsToImpliedProbability(rightOddsMoneyline);
+          }
+        }
+
+        let leftProb = null;
+        let rightProb = null;
+
+        if (leftOddsImplied && rightOddsImplied && leftOddsImplied > 0 && rightOddsImplied > 0) {
+          const total = leftOddsImplied + rightOddsImplied;
+          leftProb = Math.round((leftOddsImplied / total) * 100);
+          rightProb = Math.round((rightOddsImplied / total) * 100);
+          if (leftProb + rightProb !== 100) {
+            rightProb = 100 - leftProb;
+          }
+        }
+
+        if (leftProb === null || rightProb === null) {
+          return (
+            <div className="win-probability-container">
+              <div className="probability-bar-wrapper probability-bar-no-data">
+                <span className="no-data-text">NO DATA YET — SOON</span>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <div className="win-probability-container">
+            {/* 🔥 BUTTON + BAR BLEIBEN IM WRAPPER */}
+            <div className="probability-bar-wrapper">
+              <div className="probability-bar">
+                <div className="probability-fill left" style={{ width: `${leftProb}%` }}>
+                  <span className="probability-value">{leftProb}%</span>
+                </div>
+
+                <div className="probability-fill right" style={{ width: `${rightProb}%` }}>
+                  <span className="probability-value">{rightProb}%</span>
+                </div>
+              </div>
+
+              {/* 🔥 INSIGHTS BUTTON - TOP LEFT CORNER */}
               <button
-                className="insights-close"
-                onClick={() => setShowInsights(false)}
+                className="insights-toggle-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenInsights(fight);
+                }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <circle cx="12" cy="8" r="0.5" fill="currentColor" />
                 </svg>
               </button>
             </div>
-
-            <div className="insights-body">
-              {/* LEFT COLUMN - Fighter Info */}
-              <div className="insights-column insights-column--fighters">
-                <div className="insights-grid">
-                  {/* Fighter Names */}
-                  <div className="fighter-names-row">
-                    <h4 className="insights-fighter-name insights-fighter-name--left">
-                      {left.name.split(' ')[0]}
-                    </h4>
-                    <div className="insights-divider-center">
-                      <span>VS</span>
-                    </div>
-                    <h4 className="insights-fighter-name insights-fighter-name--right">
-                      {right.name.split(' ')[0]}
-                    </h4>
-                  </div>
-
-                  {/* Badges Row by Row */}
-                  {/* Status */}
-                  <div className="badge-row">
-                    <div className="badge-cell badge-cell--left">
-                      {left.badges?.ageStatus && (
-                        <div className={`insight-badge age-${left.badges.ageStatus.color}`}>
-                          <span className="badge-label">Status</span>
-                          <span className="badge-value">{left.badges.ageStatus.label}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="badge-cell badge-cell--right">
-                      {right.badges?.ageStatus && (
-                        <div className={`insight-badge age-${right.badges.ageStatus.color}`}>
-                          <span className="badge-label">Status</span>
-                          <span className="badge-value">{right.badges.ageStatus.label}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Type */}
-                  <div className="badge-row">
-                    <div className="badge-cell badge-cell--left">
-                      {left.badges?.fighterType && (
-                        <div className="insight-badge type">
-                          <span className="badge-label">Type</span>
-                          <span className="badge-value">{left.badges.fighterType.label}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="badge-cell badge-cell--right">
-                      {right.badges?.fighterType && (
-                        <div className="insight-badge type">
-                          <span className="badge-label">Type</span>
-                          <span className="badge-value">{right.badges.fighterType.label}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Style */}
-                  <div className="badge-row">
-                    <div className="badge-cell badge-cell--left">
-                      {left.badges?.fightingStyle && (
-                        <div className="insight-badge style">
-                          <span className="badge-label">Style</span>
-                          <span className="badge-value">{left.badges.fightingStyle.label}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="badge-cell badge-cell--right">
-                      {right.badges?.fightingStyle && (
-                        <div className="insight-badge style">
-                          <span className="badge-label">Style</span>
-                          <span className="badge-value">{right.badges.fightingStyle.label}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="insights-divider-small"></div>
-
-                  {/* Metrics - Side by Side */}
-                  {left.advancedMetrics && right.advancedMetrics && (
-                    <>
-                      {/* Fight IQ */}
-                      <div className="metric-row">
-                        <div className="metric-cell metric-cell--left">
-                          <span className="metric-label">Fight IQ</span>
-                          <span className="metric-value">{left.advancedMetrics.fightIQ}/100</span>
-                        </div>
-                        <div className="metric-divider">VS</div>
-                        <div className="metric-cell metric-cell--right">
-                          <span className="metric-label">Fight IQ</span>
-                          <span className="metric-value">{right.advancedMetrics.fightIQ}/100</span>
-                        </div>
-                      </div>
-
-                      {/* Durability */}
-                      <div className="metric-row">
-                        <div className="metric-cell metric-cell--left">
-                          <span className="metric-label">Durability</span>
-                          <span className="metric-value">{left.advancedMetrics.durability}/100</span>
-                        </div>
-                        <div className="metric-divider">VS</div>
-                        <div className="metric-cell metric-cell--right">
-                          <span className="metric-label">Durability</span>
-                          <span className="metric-value">{right.advancedMetrics.durability}/100</span>
-                        </div>
-                      </div>
-
-                      {/* Pace */}
-                      <div className="metric-row">
-                        <div className="metric-cell metric-cell--left">
-                          <span className="metric-label">Pace</span>
-                          <span className="metric-value">{left.advancedMetrics.pace}</span>
-                        </div>
-                        <div className="metric-divider">VS</div>
-                        <div className="metric-cell metric-cell--right">
-                          <span className="metric-label">Pace</span>
-                          <span className="metric-value">{right.advancedMetrics.pace}</span>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-              {/* RIGHT COLUMN - Stats */}
-              <div className="insights-column insights-column--stats">
-                {/* Finish Probability */}
-                {left.advancedMetrics?.finishProb && right.advancedMetrics?.finishProb && (
-                  <div className="insights-section">
-                    <div className="section-title">Finish Probability</div>
-                    <div className="stats-grid">
-                      <div className="stat-row">
-                        <span className="stat-label">KO/TKO</span>
-                        <span className={`stat-value stat-value--left ${left.advancedMetrics.finishProb.ko > right.advancedMetrics.finishProb.ko ? 'stat-value--winner' : ''}`}>
-                          {left.advancedMetrics.finishProb.ko}%
-                        </span>
-                        <span className="stat-vs">vs</span>
-                        <span className={`stat-value stat-value--right ${right.advancedMetrics.finishProb.ko > left.advancedMetrics.finishProb.ko ? 'stat-value--winner' : ''}`}>
-                          {right.advancedMetrics.finishProb.ko}%
-                        </span>
-                      </div>
-                      <div className="stat-row">
-                        <span className="stat-label">Submission</span>
-                        <span className={`stat-value stat-value--left ${left.advancedMetrics.finishProb.sub > right.advancedMetrics.finishProb.sub ? 'stat-value--winner' : ''}`}>
-                          {left.advancedMetrics.finishProb.sub}%
-                        </span>
-                        <span className="stat-vs">vs</span>
-                        <span className={`stat-value stat-value--right ${right.advancedMetrics.finishProb.sub > left.advancedMetrics.finishProb.sub ? 'stat-value--winner' : ''}`}>
-                          {right.advancedMetrics.finishProb.sub}%
-                        </span>
-                      </div>
-                      <div className="stat-row">
-                        <span className="stat-label">Decision</span>
-                        <span className={`stat-value stat-value--left ${left.advancedMetrics.finishProb.dec > right.advancedMetrics.finishProb.dec ? 'stat-value--winner' : ''}`}>
-                          {left.advancedMetrics.finishProb.dec}%
-                        </span>
-                        <span className="stat-vs">vs</span>
-                        <span className={`stat-value stat-value--right ${right.advancedMetrics.finishProb.dec > left.advancedMetrics.finishProb.dec ? 'stat-value--winner' : ''}`}>
-                          {right.advancedMetrics.finishProb.dec}%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Danger Zones */}
-                {left.advancedMetrics?.dangerZones && right.advancedMetrics?.dangerZones && (
-                  <div className="insights-section">
-                    <div className="section-title">Danger Rating</div>
-                    <div className="stats-grid">
-                      <div className="stat-row">
-                        <span className="stat-label">Standing</span>
-                        <span className={`stat-value stat-value--left ${left.advancedMetrics.dangerZones.standing > right.advancedMetrics.dangerZones.standing ? 'stat-value--winner' : ''}`}>
-                          {left.advancedMetrics.dangerZones.standing}
-                        </span>
-                        <span className="stat-vs">vs</span>
-                        <span className={`stat-value stat-value--right ${right.advancedMetrics.dangerZones.standing > left.advancedMetrics.dangerZones.standing ? 'stat-value--winner' : ''}`}>
-                          {right.advancedMetrics.dangerZones.standing}
-                        </span>
-                      </div>
-                      <div className="stat-row">
-                        <span className="stat-label">Clinch</span>
-                        <span className={`stat-value stat-value--left ${left.advancedMetrics.dangerZones.clinch > right.advancedMetrics.dangerZones.clinch ? 'stat-value--winner' : ''}`}>
-                          {left.advancedMetrics.dangerZones.clinch}
-                        </span>
-                        <span className="stat-vs">vs</span>
-                        <span className={`stat-value stat-value--right ${right.advancedMetrics.dangerZones.clinch > left.advancedMetrics.dangerZones.clinch ? 'stat-value--winner' : ''}`}>
-                          {right.advancedMetrics.dangerZones.clinch}
-                        </span>
-                      </div>
-                      <div className="stat-row">
-                        <span className="stat-label">Ground</span>
-                        <span className={`stat-value stat-value--left ${left.advancedMetrics.dangerZones.ground > right.advancedMetrics.dangerZones.ground ? 'stat-value--winner' : ''}`}>
-                          {left.advancedMetrics.dangerZones.ground}
-                        </span>
-                        <span className="stat-vs">vs</span>
-                        <span className={`stat-value stat-value--right ${right.advancedMetrics.dangerZones.ground > left.advancedMetrics.dangerZones.ground ? 'stat-value--winner' : ''}`}>
-                          {right.advancedMetrics.dangerZones.ground}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* X-Factors - unchanged */}
-                {(left.advancedMetrics?.xFactors?.length > 0 || right.advancedMetrics?.xFactors?.length > 0) && (
-                  <div className="insights-section">
-                    <div className="section-title">X-Factors</div>
-                    <div className="xfactors-grid">
-                      <div className="xfactors-column">
-                        {left.advancedMetrics.xFactors.map((factor, i) => (
-                          <span key={i} className="xfactor-tag">{factor}</span>
-                        ))}
-                        {left.advancedMetrics.xFactors.length === 0 && (
-                          <span className="xfactor-tag xfactor-tag--empty">None</span>
-                        )}
-                      </div>
-                      <div className="xfactors-divider">VS</div>
-                      <div className="xfactors-column">
-                        {right.advancedMetrics.xFactors.map((factor, i) => (
-                          <span key={i} className="xfactor-tag">{factor}</span>
-                        ))}
-                        {right.advancedMetrics.xFactors.length === 0 && (
-                          <span className="xfactor-tag xfactor-tag--empty">None</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Stylistic Advantage */}
-            {(() => {
-              const leftType = left.badges?.fighterType?.type;
-              const rightType = right.badges?.fighterType?.type;
-
-              if (leftType === 'grappler' && rightType === 'striker') {
-                return (
-                  <div className="insights-advantage">
-                    <span className="advantage-text">{left.name.split(' ')[0]} has stylistic advantage (+15%)</span>
-                  </div>
-                );
-              }
-
-              if (rightType === 'grappler' && leftType === 'striker') {
-                return (
-                  <div className="insights-advantage">
-                    <span className="advantage-text">{right.name.split(' ')[0]} has stylistic advantage (+15%)</span>
-                  </div>
-                );
-              }
-
-              return null;
-            })()}
           </div>
-        )}
-      </div>
-    </div>
-  );
-})()}
+        );
+      })()}
 
-    {/* 🔥 BADGES */}
+      {/* 🔥 BADGES */}
       {(fight.mainEvent || fight.coMainEvent || fight.titleFight) && (
         <div className="fight-card__badges">
           {fight.mainEvent && <span className="fight-card__badge fight-card__badge--main">Main Event</span>}
@@ -2961,19 +3639,130 @@ return (
         </div>
       )}
 
-    {/* 🔥 FOOTER */}
-    <div className="fight-card__footer">
-      <button type="button" className="analysis-btn" onClick={() => onOpenAnalysis(fight)}>
-        Detailed Comparison
-      </button>
-      <p className="fight-card__prediction">— No Prediction —</p>
-    </div>
-  </article>
-);
+      {/* 🔥 FOOTER */}
+      <div className="fight-card__footer">
+        <button type="button" className="analysis-btn" onClick={() => onOpenAnalysis(fight)}>
+          Detailed Comparison
+        </button>
+        <p className="fight-card__prediction">— No Prediction —</p>
+      </div>
+    </article>
+  );
 }
 
 function AnalysisModal({ fight, onClose }) {
   const [activeTab, setActiveTab] = useState(ANALYSIS_TABS[0]);
+
+  // 🔥 FIGHT HISTORY TAB RENDER - INSIDE COMPONENT
+  const renderFightHistoryTab = (fight) => {
+    const fighter1 = fight.fighter1;
+    const fighter2 = fight.fighter2;
+
+    const history1 = fighter1?.fightHistory?.slice(0, 5) || [];
+    const history2 = fighter2?.fightHistory?.slice(0, 5) || [];
+
+    if (!history1.length && !history2.length) {
+      return (
+        <div className="history-empty">
+          <p>No fight history available</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="fight-history-tab">
+        <div className="history-section-title">
+          <h3>Last 5 Fights</h3>
+          <span className="history-subtitle">Most recent performances</span>
+        </div>
+
+        <div className="history-grid">
+          {/* Fighter 1 History */}
+          <div className="history-column">
+            <div className="history-fighter-header">
+              <span className="fighter-name">{fighter1.name}</span>
+            </div>
+
+            <div className="history-fights">
+              {history1.map((fightItem, index) => (
+                <div key={index} className={`history-fight-card ${fightItem.result?.toLowerCase()}`}>
+                  <div className="fight-result-badge">
+                    <span className={`result-indicator ${fightItem.result?.toLowerCase()}`}>
+                      {fightItem.result === 'Win' ? '✓' : fightItem.result === 'Loss' ? '✕' : '−'}
+                    </span>
+                    <span className="result-text">{fightItem.result}</span>
+                  </div>
+
+                  <div className="fight-details">
+                    <div className="opponent-name">vs {fightItem.opponent}</div>
+                    <div className="fight-info-row">
+                      <span className="method-badge">{fightItem.method}</span>
+                      {fightItem.round && fightItem.round !== 'N/A' && (
+                        <span className="round-info">R{fightItem.round}</span>
+                      )}
+                      {fightItem.time && fightItem.time !== 'N/A' && (
+                        <span className="time-info">{fightItem.time}</span>
+                      )}
+                    </div>
+                    <div className="event-info">
+                      <span className="event-name">{fightItem.event}</span>
+                      <span className="event-date">{fightItem.date}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {history1.length === 0 && <div className="no-history">No fight history available</div>}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="history-divider">
+            <div className="divider-line"></div>
+            <span className="divider-text">VS</span>
+            <div className="divider-line"></div>
+          </div>
+
+          {/* Fighter 2 History */}
+          <div className="history-column">
+            <div className="history-fighter-header">
+              <span className="fighter-name">{fighter2.name}</span>
+            </div>
+
+            <div className="history-fights">
+              {history2.map((fightItem, index) => (
+                <div key={index} className={`history-fight-card ${fightItem.result?.toLowerCase()}`}>
+                  <div className="fight-result-badge">
+                    <span className={`result-indicator ${fightItem.result?.toLowerCase()}`}>
+                      {fightItem.result === 'Win' ? '✓' : fightItem.result === 'Loss' ? '✕' : '−'}
+                    </span>
+                    <span className="result-text">{fightItem.result}</span>
+                  </div>
+
+                  <div className="fight-details">
+                    <div className="opponent-name">vs {fightItem.opponent}</div>
+                    <div className="fight-info-row">
+                      <span className="method-badge">{fightItem.method}</span>
+                      {fightItem.round && fightItem.round !== 'N/A' && (
+                        <span className="round-info">R{fightItem.round}</span>
+                      )}
+                      {fightItem.time && fightItem.time !== 'N/A' && (
+                        <span className="time-info">{fightItem.time}</span>
+                      )}
+                    </div>
+                    <div className="event-info">
+                      <span className="event-name">{fightItem.event}</span>
+                      <span className="event-date">{fightItem.date}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {history2.length === 0 && <div className="no-history">No fight history available</div>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     setActiveTab(ANALYSIS_TABS[0]);
@@ -3033,15 +3822,15 @@ function AnalysisModal({ fight, onClose }) {
     setImageIndex2((prev) => (prev + 1 < fullCandidates2.length ? prev + 1 : prev));
   };
 
-const matchupRows = [
-  { label: "Age", left: left.stats.matchup.age, right: right.stats.matchup.age },
-  { label: "Fighting Style", left: left.stats.matchup.style, right: right.stats.matchup.style },
-  { label: "Height", left: left.stats.matchup.height, right: right.stats.matchup.height },
-  { label: "Weight", left: left.stats.matchup.weight, right: right.stats.matchup.weight },
-  { label: "Reach", left: left.stats.matchup.reach, right: right.stats.matchup.reach },
-  { label: "Leg Reach", left: left.stats.matchup.legReach, right: right.stats.matchup.legReach },
-  { label: "Stance", left: left.stats.matchup.stance, right: right.stats.matchup.stance },
-];
+  const matchupRows = [
+    { label: "Age", left: left.stats.matchup.age, right: right.stats.matchup.age },
+    { label: "Fighting Style", left: left.stats.matchup.style, right: right.stats.matchup.style },
+    { label: "Height", left: left.stats.matchup.height, right: right.stats.matchup.height },
+    { label: "Weight", left: left.stats.matchup.weight, right: right.stats.matchup.weight },
+    { label: "Reach", left: left.stats.matchup.reach, right: right.stats.matchup.reach },
+    { label: "Leg Reach", left: left.stats.matchup.legReach, right: right.stats.matchup.legReach },
+    { label: "Stance", left: left.stats.matchup.stance, right: right.stats.matchup.stance },
+  ];
 
   const strikeRows = [
     {
@@ -3142,82 +3931,7 @@ const matchupRows = [
   return createPortal(
     <div className="analysis-overlay" onClick={onClose}>
       <div className="analysis-window" onClick={(event) => event.stopPropagation()}>
-        <header className="analysis-top">
-          {/* Left Fighter */}
-          <div className="analysis-fighter">
-            <div className="fighter-container">
-              <img src={fullSrc1} alt={left.name} loading="lazy" onError={handleImageError1} />
-              <div className="fighter-info">
-                <div className="fighter-flag-badge">
-                  <img src={flagSrc1} alt={`${left.name} flag`} loading="lazy" onError={handleFlagError1} />
-                  <span>{left.flagCode?.toUpperCase()}</span>
-                </div>
-                <h3 className="fighter-name">{left.name}</h3>
-                <span className="fighter-record">{left.record}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* CENTER VS + INFO */}
-          <div className="analysis-center">
-            {/* 🔥 TOP: Upcoming/Weight Info */}
-            <div className="center-top-info">
-              {fight.winnerName ? (
-                <div className="result-info-top">
-                  <span className="result-label-small">Result</span>
-                </div>
-              ) : (
-                <div className="upcoming-info-top">
-                  <span className="upcoming-icon">⏱</span>
-                  <span className="upcoming-text">UPCOMING FIGHT</span>
-                </div>
-              )}
-
-              {fight.detailLine && !fight.detailLine.toLowerCase().includes('scrambled') && (
-                <div className="weight-info-top">{fight.detailLine}</div>
-              )}
-            </div>
-
-            {/* 🔥 MIDDLE: VS Circle */}
-            <div className="vs-badge-wrapper">
-              <div className="vs-circle">VS</div>
-            </div>
-
-            {/* 🔥 BOTTOM: Rounds Badge */}
-            <div className="center-bottom-info">
-              {fight.rounds && (
-                <div className={`rounds-badge ${fight.titleFight || fight.mainEvent ? 'title-fight' : ''}`}>
-                  <span className="rounds-number">{fight.rounds}</span>
-                  <span className="rounds-text">ROUNDS</span>
-                </div>
-              )}
-
-              {/* Result Summary (if past fight) */}
-              {fight.winnerName && (
-                <div className="result-summary">
-                  <p className="result-text">
-                    {fight.resultSummary.replace(/\bscrambled\b/gi, '').replace(/\s+/g, ' ').trim()}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Right Fighter */}
-          <div className="analysis-fighter">
-            <div className="fighter-container">
-              <img src={fullSrc2} alt={right.name} loading="lazy" onError={handleImageError2} />
-              <div className="fighter-info">
-                <div className="fighter-flag-badge">
-                  <span>{right.flagCode?.toUpperCase()}</span>
-                  <img src={flagSrc2} alt={`${right.name} flag`} loading="lazy" onError={handleFlagError2} />
-                </div>
-                <h3 className="fighter-name">{right.name}</h3>
-                <span className="fighter-record">{right.record}</span>
-              </div>
-            </div>
-          </div>
-        </header>
+        <FightModalHeader fight={fight} />
         <nav className="analysis-tabs">
           {ANALYSIS_TABS.map((tab) => (
             <button
@@ -3232,88 +3946,8 @@ const matchupRows = [
         </nav>
 
         <section className="analysis-content">
-          {activeTab === "Matchup" && (
-            <div className="analysis-matchup">
-              {matchupRows.map((row) => {
-                // Parse numeric values for comparison
-                const parseValue = (val) => {
-                  if (!val || val === "—") return null;
-
-                  // 🔥 FIX: Handle height format like "5'11"" or "6'3""
-                  if (typeof val === 'string' && val.includes("'")) {
-                    const match = val.match(/(\d+)'(\d+)/);
-                    if (match) {
-                      const feet = parseInt(match[1], 10);
-                      const inches = parseInt(match[2], 10);
-                      return (feet * 12) + inches; // Convert to total inches
-                    }
-                  }
-
-                  // Handle regular numbers (reach, weight, age, etc.)
-                  const num = parseFloat(String(val).replace(/[^0-9.]/g, ""));
-                  return isNaN(num) ? null : num;
-                };
-
-                const leftVal = parseValue(row.left);
-                const rightVal = parseValue(row.right);
-
-                // 🔥 DEBUG: Log the comparison (remove later)
-                console.log(`${row.label}: Left=${row.left} (${leftVal}) vs Right=${row.right} (${rightVal})`);
-
-                // Determine advantage/disadvantage
-                let leftAdvantage = false;
-                let rightAdvantage = false;
-                let leftDisadvantage = false;
-                let rightDisadvantage = false;
-
-                if (leftVal !== null && rightVal !== null && leftVal !== rightVal) {
-                  const lowerIsBetter = row.label.toLowerCase().includes('age');
-
-                  if (lowerIsBetter) {
-                    if (leftVal < rightVal) {
-                      leftAdvantage = true;
-                      rightDisadvantage = true;
-                    } else {
-                      rightAdvantage = true;
-                      leftDisadvantage = true;
-                    }
-                  } else {
-                    if (leftVal > rightVal) {
-                      leftAdvantage = true;
-                      rightDisadvantage = true;
-                    } else {
-                      rightAdvantage = true;
-                      leftDisadvantage = true;
-                    }
-                  }
-
-                  // 🔥 DEBUG: Log who got advantage
-                  console.log(`  → ${leftAdvantage ? 'LEFT' : 'RIGHT'} has advantage (${leftVal} vs ${rightVal})`);
-                }
-
-                return (
-                  <div className="matchup-stat" key={row.label}>
-                    <div className={`matchup-stat__value matchup-stat__value--left ${leftAdvantage ? 'advantage' : ''} ${leftDisadvantage ? 'disadvantage' : ''}`}>
-                      {row.left || "—"}
-                      {leftAdvantage && <span className="advantage-badge">↑</span>}
-                      {leftDisadvantage && <span className="disadvantage-badge">↓</span>}
-                    </div>
-
-                    <div className="matchup-stat__label">
-                      {row.label}
-                    </div>
-
-                    <div className={`matchup-stat__value matchup-stat__value--right ${rightAdvantage ? 'advantage' : ''} ${rightDisadvantage ? 'disadvantage' : ''}`}>
-                      {rightAdvantage && <span className="advantage-badge">↑</span>}
-                      {rightDisadvantage && <span className="disadvantage-badge">↓</span>}
-                      {row.right || "—"}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
+          {activeTab === "Matchup" && renderMatchupTabV3(fight)}
+          {activeTab === "Fight History" && renderFightHistoryTab(fight)}
           {activeTab === "Career" && (
             <div className="analysis-career">
               <div className="career-grid">
@@ -4049,6 +4683,14 @@ function UFCPage({ onOpenStreams, onOpenBookmakers }) {
   const [eventInsights, setEventInsights] = useState([]);
   const [activeFight, setActiveFight] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // 🔥 FIGHTER INSIGHTS MODAL (für "Detailed Comparison")
+  const [showFighterInsights, setShowFighterInsights] = useState(false);
+
+  // 🔥 INSIGHTS POPUP (für "ℹ️ Button")
+  const [showInsightsPopup, setShowInsightsPopup] = useState(false);
+  const [insightsFight, setInsightsFight] = useState(null);
+
   const fightersRef = useRef({ list: [], directory: new Map() });
   const loadingStartRef = useRef(null);
 
@@ -4095,241 +4737,373 @@ function UFCPage({ onOpenStreams, onOpenBookmakers }) {
   }, [events, selectedEventId]);
 
 
-useEffect(() => {
-  let mounted = true;
-  
-  const finishLoading = () => {
-    const start = loadingStartRef.current;
-    if (!start) {
-      setIsLoading(false);
-      return;
-    }
-    const elapsed = Date.now() - start;
-    if (elapsed < MIN_LOADING_MS) {
-      setTimeout(() => {
-        if (mounted) {
-          setIsLoading(false);
+  useEffect(() => {
+    let mounted = true;
+
+    const finishLoading = () => {
+      const start = loadingStartRef.current;
+      if (!start) {
+        setIsLoading(false);
+        return;
+      }
+      const elapsed = Date.now() - start;
+      if (elapsed < MIN_LOADING_MS) {
+        setTimeout(() => {
+          if (mounted) {
+            setIsLoading(false);
+          }
+        }, MIN_LOADING_MS - elapsed);
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    const loadEvent = async () => {
+      if (!selectedEventId) {
+        setCurrentEvent({ mainCard: [], prelims: [] });
+        setEventMeta(null);
+        setEventInsights([]);
+        return;
+      }
+
+      loadingStartRef.current = Date.now();
+      setIsLoading(true);
+      setActiveFight(null);
+
+      try {
+        // 🔥 LOAD DATA FROM API
+        const ufcData = await loadUFCData();
+
+        if (!mounted) return;
+
+        console.log('✅ API Data:', ufcData);
+
+        // 🔥 BUILD FIGHTER DIRECTORY
+        const fighterDirectory = new Map();
+
+        // Handle both array and object format
+        const fightersData = Array.isArray(ufcData.fighters)
+          ? ufcData.fighters
+          : Object.values(ufcData.fighters || {});
+
+        fightersData.forEach(fighter => {
+          if (!fighter) return;
+
+          const mapped = mapFighterData(fighter);
+          if (!mapped) return;
+
+          // Index by ID
+          const fighterId = mapped.FighterId;
+          if (fighterId) {
+            fighterDirectory.set(`id:${fighterId}`, mapped);
+          }
+
+          // Index by name
+          const name = mapped.Name;
+          if (name) {
+            const nameKey = `name:${name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+            fighterDirectory.set(nameKey, mapped);
+          }
+        });
+
+        fightersRef.current = {
+          list: fightersData,
+          directory: fighterDirectory
+        };
+
+        console.log('✅ Fighter directory built:', fighterDirectory.size);
+
+        // 🔥 OFFLINE MODE
+        if (selectedEventId === "offline-event") {
+          const offlineFights = [];
+          const offlinePrelims = [];
+
+          const fallbackEntries = [
+            {
+              Name: "Steve Garcia",
+              FighterId: "garcia-steve",
+              Record: "14-5-0",
+              CountryCode: "us",
+            },
+            {
+              Name: "David Onama",
+              FighterId: "onama-david",
+              Record: "13-2-0",
+              CountryCode: "ug",
+            },
+          ];
+
+          const fallbackFight = await buildFight(
+            {
+              Fighters: fallbackEntries,
+              WeightClass: "Featherweight",
+              CardSegment: "Main",
+              Rounds: 3,
+              TitleFight: false,
+            },
+            fighterDirectory
+          );
+
+          if (fallbackFight) {
+            offlineFights.push(fallbackFight);
+          }
+
+          setCurrentEvent({ mainCard: offlineFights, prelims: offlinePrelims });
+          setEventMeta({
+            name: "UFC Fight Night (Offline Mode)",
+            date: null,
+            location: "UFC APEX — Las Vegas, NV",
+          });
+          setEventInsights([
+            { label: "Main Event", value: offlineFights[0]?.resultSummary || "TBA", hint: offlineFights[0]?.weightClass },
+            { label: "Total Fights", value: offlineFights.length + offlinePrelims.length || "—", hint: "Offline preview" },
+          ]);
+          finishLoading();
+          return;
         }
-      }, MIN_LOADING_MS - elapsed);
-    } else {
-      setIsLoading(false);
-    }
-  };
 
-  const loadEvent = async () => {
-    if (!selectedEventId) {
-      setCurrentEvent({ mainCard: [], prelims: [] });
-      setEventMeta(null);
-      setEventInsights([]);
-      return;
-    }
+        // 🔥 FIND SELECTED EVENT
+        const selectedEvent = ufcData.events?.find(e => {
+          // Try multiple ID formats
+          const eventId = e.id || e.eventId || e.url || e.name;
+          return eventId === selectedEventId;
+        });
 
-    loadingStartRef.current = Date.now();
-    setIsLoading(true);
-    setActiveFight(null);
+        if (!selectedEvent) {
+          console.warn('⚠️  Event not found:', selectedEventId);
+          console.log('📋 Available events:', ufcData.events?.map(e => ({
+            id: e.id || e.eventId || e.url,
+            name: e.name || e.eventName
+          })));
 
-    try {
-      // LOAD DATA FROM LOCAL API
-      const ufcData = await loadUFCData();
-
-      if (!mounted) return;
-
-      // Build fighter directory from scraped data
-      const fighterDirectory = new Map();
-
-      // 🔥 FIX: Handle both object and array fighters
-      const fightersData = Array.isArray(ufcData.fighters)
-        ? ufcData.fighters
-        : Object.values(ufcData.fighters || {});
-
-      fightersData.forEach(fighter => {
-        if (!fighter) return;
-
-        const mapped = mapFighterData(fighter);
-        if (!mapped) return;
-
-        // Index by ID
-        const fighterId = mapped.FighterId || fighter.id || fighter.url?.split('/').pop();
-        if (fighterId) {
-          fighterDirectory.set(`id:${fighterId}`, mapped);
+          setCurrentEvent({ mainCard: [], prelims: [] });
+          setEventMeta({ name: 'Event Not Found', date: null, location: 'TBA' });
+          setEventInsights([]);
+          finishLoading();
+          return;
         }
 
-        // Index by name
-        const name = mapped.Name || fighter.name;
-        if (name) {
-          const nameKey = `name:${name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
-          fighterDirectory.set(nameKey, mapped);
-        }
-      });
+        console.log('📅 Loading event:', selectedEvent.name || selectedEvent.eventName);
+        console.log('📍 Location:', selectedEvent.location);
+        console.log('🥊 Fights:', selectedEvent.fights?.length || 0);
 
-      fightersRef.current = {
-        list: fightersData,
-        directory: fighterDirectory
-      };
+        // 🔥 BUILD FIGHTS
+        const fights = [];
 
-      console.log('✅ Fighter directory built:', fighterDirectory.size);
+        for (const scrapedFight of selectedEvent.fights || []) {
+          console.log('🔄 Processing fight:', scrapedFight.fighter1?.name, 'vs', scrapedFight.fighter2?.name);
 
-      if (selectedEventId === "offline-event") {
-        const offlineFights = [];
-        const offlinePrelims = [];
-        const fallbackFighters = fightersRef.current.directory;
+          const mappedFight = mapFightData(scrapedFight);
 
-        const fallbackEntries = [
-          {
-            Name: "Steve Garcia",
-            FighterId: "garcia-steve",
-            Record: "14-5-0",
-            CountryCode: "us",
-          },
-          {
-            Name: "David Onama",
-            FighterId: "onama-david",
-            Record: "13-2-0",
-            CountryCode: "ug",
-          },
-        ];
+          if (!mappedFight || !mappedFight.Fighters || mappedFight.Fighters.length < 2) {
+            console.warn('⚠️  Missing fighter data for fight');
+            continue;
+          }
 
-        const fallbackFight = await buildFight(
-          {
-            Fighters: fallbackEntries,
-            WeightClass: "Featherweight",
-            CardSegment: "Main",
-            Rounds: 3,
-            TitleFight: false,
-          },
-          fallbackFighters
-        );
+          // 🔥 ENRICH FIGHTERS WITH FULL STATS FROM DIRECTORY
+          mappedFight.Fighters = mappedFight.Fighters.map(fighter => {
+            // Try to find full fighter data
+            const fullData = lookupFighter(fighterDirectory, {
+              url: `/${fighter.FighterId}.html`,
+              name: fighter.Name
+            });
 
-        if (fallbackFight) {
-          offlineFights.push(fallbackFight);
+            if (fullData) {
+              console.log(`✅ Enriched fighter: ${fighter.Name}`);
+              return {
+                ...fullData, // 🔥 Full stats from directory
+                ...fighter,  // Override with fight-specific data (ranking, etc.)
+              };
+            }
+
+            console.warn(`⚠️  No full stats for: ${fighter.Name}`);
+            return fighter;
+          });
+
+          const fight = await buildFight(mappedFight, fighterDirectory);
+
+          if (fight) {
+            console.log('✅ Built fight:', fight.fighter1?.name, 'vs', fight.fighter2?.name);
+            fights.push(fight);
+          }
         }
 
-        setCurrentEvent({ mainCard: offlineFights, prelims: offlinePrelims });
+        console.log('✅ Total built fights:', fights.length);
+
+        const { main, prelims } = splitFightCards(fights);
+
+        setCurrentEvent({ mainCard: main, prelims });
+
+        // 🔥 SET EVENT META
         setEventMeta({
-          name: "UFC Fight Night (Offline Mode)",
-          date: null,
-          location: "UFC APEX — Las Vegas, NV",
+          name: selectedEvent.name || selectedEvent.eventName || 'UFC Event',
+          date: selectedEvent.date || selectedEvent.eventDate || null,
+          location: selectedEvent.location || selectedEvent.venue || 'Location TBA'
         });
-        setEventInsights([
-          { label: "Main Event", value: offlineFights[0]?.resultSummary || "TBA", hint: offlineFights[0]?.weightClass },
-          { label: "Total Fights", value: offlineFights.length + offlinePrelims.length || "—", hint: "Offline preview" },
-        ]);
-        finishLoading();
-        return;
-      }
 
-      // 🔥 FIX: Find selected event with flexible property names
-      const selectedEvent = ufcData.events?.find(e => {
-        const eventId = e.id || e.eventId || e.url;
-        return eventId === selectedEventId;
-      });
+        // 🔥 EVENT INSIGHTS
+        const headline = main[0] || null;
+        const insights = [];
 
-      if (!selectedEvent) {
-        console.warn('⚠️  Event not found:', selectedEventId);
-        console.log('Available events:', ufcData.events?.map(e => ({
-          id: e.id || e.eventId,
-          name: e.name || e.eventName
-        })));
-        setCurrentEvent({ mainCard: [], prelims: [] });
-        setEventMeta({ name: 'Event Not Found', date: null, location: 'TBA' });
-        setEventInsights([]);
-        finishLoading();
-        return;
-      }
-
-      console.log('📅 Loading event:', selectedEvent.name || selectedEvent.eventName);
-      console.log('📍 Location:', selectedEvent.location);
-      console.log('🥊 Fights:', selectedEvent.fights?.length);
-
-      // Build fights from scraped data
-      const fights = [];
-
-      for (const scrapedFight of selectedEvent.fights || []) {
-        console.log('🔄 Processing fight:', scrapedFight.fighter1?.name, 'vs', scrapedFight.fighter2?.name);
-
-        const mappedFight = mapFightData(scrapedFight);
-
-        console.log('🗺️  Mapped fight:', mappedFight);
-
-        if (!mappedFight || !mappedFight.Fighters || mappedFight.Fighters.length < 2) {
-          console.warn('⚠️  Missing fighter data for fight');
-          continue;
+        if (headline) {
+          insights.push({
+            label: 'Main Event',
+            value: `${headline.fighter1.name} vs ${headline.fighter2.name}`,
+            hint: headline.weightClass || 'Headline bout'
+          });
         }
 
-        const fight = await buildFight(mappedFight, fighterDirectory);
+        insights.push({
+          label: 'Total Fights',
+          value: fights.length || '—',
+          hint: `${main.length} main • ${prelims.length} prelim`
+        });
 
-        console.log('✅ Built fight:', fight?.fighter1?.name, 'vs', fight?.fighter2?.name);
+        const titleCount = main.filter((fight) => fight.titleFight).length;
+        if (titleCount > 0) {
+          insights.push({
+            label: 'Title Fights',
+            value: String(titleCount),
+            hint: titleCount === 1 ? 'Championship bout' : 'Multiple belts'
+          });
+        }
 
-        if (fight) {
-          fights.push(fight);
+        setEventInsights(insights);
+
+      } catch (error) {
+        console.error('❌ Event Error:', error);
+        console.error('Stack:', error.stack);
+        if (mounted) {
+          setCurrentEvent({ mainCard: [], prelims: [] });
+          setEventMeta({ name: 'UFC Event', date: null, location: 'TBA' });
+          setEventInsights([]);
+        }
+      } finally {
+        if (mounted) {
+          finishLoading();
         }
       }
+    };
 
-      console.log('✅ Total built fights:', fights.length);
-
-      const { main, prelims } = splitFightCards(fights);
-
-      setCurrentEvent({ mainCard: main, prelims });
-
-      // 🔥 FIX: Handle flexible event property names
-      setEventMeta({
-        name: selectedEvent.name || selectedEvent.eventName || 'UFC Event',
-        date: selectedEvent.date || selectedEvent.eventDate || null,
-        location: selectedEvent.location || selectedEvent.venue || 'Location TBA'
-      });
-
-      const headline = main[0] || null;
-      const insights = [];
-
-      if (headline) {
-        insights.push({
-          label: 'Main Event',
-          value: `${headline.fighter1.name} vs ${headline.fighter2.name}`,
-          hint: headline.weightClass || 'Headline bout'
-        });
-      }
-
-      insights.push({
-        label: 'Total Fights',
-        value: fights.length || '—',
-        hint: `${main.length} main • ${prelims.length} prelim`
-      });
-
-      const titleCount = main.filter((fight) => fight.titleFight).length;
-      if (titleCount > 0) {
-        insights.push({
-          label: 'Title Fights',
-          value: String(titleCount),
-          hint: titleCount === 1 ? 'Championship bout' : 'Multiple belts'
-        });
-      }
-
-      setEventInsights(insights);
-
-    } catch (error) {
-      console.error('❌ Event Error:', error);
-      console.error('Stack:', error.stack);
-      if (mounted) {
-        setCurrentEvent({ mainCard: [], prelims: [] });
-        setEventMeta({ name: 'UFC Event', date: null, location: 'Location TBA' });
-        setEventInsights([]);
-      }
-    } finally {
-      if (mounted) {
-        finishLoading();
-      }
-    }
-  };
-
-  loadEvent();
-  return () => {
-    mounted = false;
-  };
-}, [selectedEventId]);
-
+    loadEvent();
+    return () => {
+      mounted = false;
+    };
+  }, [selectedEventId]);
 
   const mainFights = currentEvent.mainCard;
   const prelimFights = currentEvent.prelims;
+
+  // 🔥 FIGHT HISTORY TAB RENDER
+  const renderFightHistoryTab = (fight) => {
+    const fighter1 = fight.fighter1;
+    const fighter2 = fight.fighter2;
+
+    const history1 = fighter1?.fightHistory?.slice(0, 5) || [];
+    const history2 = fighter2?.fightHistory?.slice(0, 5) || [];
+
+    if (!history1.length && !history2.length) {
+      return (
+        <div className="history-empty">
+          <p>No fight history available</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="fight-history-tab">
+        <div className="history-section-title">
+          <h3>Last 5 Fights</h3>
+          <span className="history-subtitle">Most recent performances</span>
+        </div>
+
+        <div className="history-grid">
+          {/* Fighter 1 History */}
+          <div className="history-column">
+            <div className="history-fighter-header">
+              <span className="fighter-name">{fighter1.name}</span>
+            </div>
+
+            <div className="history-fights">
+              {history1.map((fightItem, index) => (
+                <div key={index} className={`history-fight-card ${fightItem.result?.toLowerCase()}`}>
+                  <div className="fight-result-badge">
+                    <span className={`result-indicator ${fightItem.result?.toLowerCase()}`}>
+                      {fightItem.result === 'Win' ? '✓' : fightItem.result === 'Loss' ? '✕' : '−'}
+                    </span>
+                    <span className="result-text">{fightItem.result}</span>
+                  </div>
+
+                  <div className="fight-details">
+                    <div className="opponent-name">vs {fightItem.opponent}</div>
+                    <div className="fight-info-row">
+                      <span className="method-badge">{fightItem.method}</span>
+                      {fightItem.round && fightItem.round !== 'N/A' && (
+                        <span className="round-info">R{fightItem.round}</span>
+                      )}
+                      {fightItem.time && fightItem.time !== 'N/A' && (
+                        <span className="time-info">{fightItem.time}</span>
+                      )}
+                    </div>
+                    <div className="event-info">
+                      <span className="event-name">{fightItem.event}</span>
+                      <span className="event-date">{fightItem.date}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {history1.length === 0 && <div className="no-history">No fight history available</div>}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="history-divider">
+            <div className="divider-line"></div>
+            <span className="divider-text">VS</span>
+            <div className="divider-line"></div>
+          </div>
+
+          {/* Fighter 2 History */}
+          <div className="history-column">
+            <div className="history-fighter-header">
+              <span className="fighter-name">{fighter2.name}</span>
+            </div>
+
+            <div className="history-fights">
+              {history2.map((fightItem, index) => (
+                <div key={index} className={`history-fight-card ${fightItem.result?.toLowerCase()}`}>
+                  <div className="fight-result-badge">
+                    <span className={`result-indicator ${fightItem.result?.toLowerCase()}`}>
+                      {fightItem.result === 'Win' ? '✓' : fightItem.result === 'Loss' ? '✕' : '−'}
+                    </span>
+                    <span className="result-text">{fightItem.result}</span>
+                  </div>
+
+                  <div className="fight-details">
+                    <div className="opponent-name">vs {fightItem.opponent}</div>
+                    <div className="fight-info-row">
+                      <span className="method-badge">{fightItem.method}</span>
+                      {fightItem.round && fightItem.round !== 'N/A' && (
+                        <span className="round-info">R{fightItem.round}</span>
+                      )}
+                      {fightItem.time && fightItem.time !== 'N/A' && (
+                        <span className="time-info">{fightItem.time}</span>
+                      )}
+                    </div>
+                    <div className="event-info">
+                      <span className="event-name">{fightItem.event}</span>
+                      <span className="event-date">{fightItem.date}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {history2.length === 0 && <div className="no-history">No fight history available</div>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="ufc-page">
@@ -4448,7 +5222,16 @@ useEffect(() => {
               </header>
               <div className="fight-pyramid">
                 {mainFights.map((fight) => (
-                  <FightCard key={fight.fightKey} fight={fight} accent="main" onOpenAnalysis={setActiveFight} />
+                  <FightCard
+                    key={fight.fightKey}
+                    fight={fight}
+                    accent="main"
+                    onOpenAnalysis={setActiveFight}
+                    onOpenInsights={(fight) => {
+                      setInsightsFight(fight);
+                      setShowFighterInsights(true);
+                    }}
+                  />
                 ))}
               </div>
             </section>
@@ -4460,9 +5243,18 @@ useEffect(() => {
                   <p>Prospects and stylistic tests ahead of the marquee attractions.</p>
                 </header>
                 <div className="fight-pyramid">
-                  {prelimFights.map((fight) => (
-                    <FightCard key={fight.fightKey} fight={fight} accent="prelim" onOpenAnalysis={setActiveFight} />
-                  ))}
+                {prelimFights.map((fight) => (
+                  <FightCard 
+                    key={fight.fightKey} 
+                    fight={fight} 
+                    accent="prelim" 
+                    onOpenAnalysis={setActiveFight}
+                    onOpenInsights={(fight) => {
+                      setInsightsFight(fight);
+                      setShowFighterInsights(true);
+                    }}
+                  />
+                ))}
                 </div>
               </section>
             )}
@@ -4476,6 +5268,25 @@ useEffect(() => {
       </section>
 
       {activeFight && <AnalysisModal fight={activeFight} onClose={() => setActiveFight(null)} />}
+      
+      {showFighterInsights && insightsFight && (
+        <InsightsPopup
+          fight={insightsFight}
+          onClose={() => {
+            setShowFighterInsights(false);
+            setInsightsFight(null);
+          }}
+        />
+      )}
+
+      {/* 🔥 NEW: FighterInsightsModal */}
+      {showFighterInsights && insightsFight && (
+        <FighterInsightsModal 
+          fighter1={insightsFight.fighter1}
+          fighter2={insightsFight.fighter2}
+          onClose={() => setShowFighterInsights(false)}
+        />
+      )}
     </div>
   );
 }
